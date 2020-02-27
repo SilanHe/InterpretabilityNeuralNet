@@ -81,7 +81,7 @@ args = parser.parse_args([])
 print(args.batch_size,args.epochs,args.d_embed,args.d_proj,args.d_hidden,args.birnn)
 
 # save args
-torch.save(args,name_mode + "_args")
+torch.save(args,name_model + "_args")
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 inputs = data.Field(lower=True, tokenize='spacy')
