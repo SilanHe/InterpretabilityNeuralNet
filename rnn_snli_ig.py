@@ -15,7 +15,7 @@ from torchtext import datasets
 import random
 import numpy as np
 
-
+import spacy
 import classifiers as c
 import sys
 
