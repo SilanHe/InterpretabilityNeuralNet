@@ -92,6 +92,7 @@ def integrated_gradients(s1_premise, s2_hypothesis, m=300):
     relevances = [sum_grad[0].detach().cpu().numpy(), sum_grad[1].detach().cpu().numpy()]
     ptokens=[tok.text for tok in nlp.tokenizer(s1_premise)]
     htokens=[tok.text for tok in nlp.tokenizer(s2_hypothesis)]
+    print("---------------------------------------------------------")
     try:
         relevances = [list(np.round(np.reshape(relevances[0],len(ptokens)),3)), list(np.round(np.reshape(relevances[1],len(htokens)),3))]
         df1 = pd.DataFrame(index=['Premise','IntegGrad'], columns=list(range(len(ptokens))), data=[ptokens, relevances[0]])
