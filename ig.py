@@ -6,6 +6,7 @@ import torch.nn as nn
 import os
 from argparse import ArgumentParser
 
+from torchtext import data
 from torchtext import datasets
 import numpy as np
 
