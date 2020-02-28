@@ -21,6 +21,15 @@ embh = torch.load(name_model + "_embh")
 nlp = spacy.load('en')
 #model.eval()
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+inputs = data.Field(lower=True, tokenize='spacy')
+answers = data.Field(sequential=False)
+
+train, dev, test = datasets.SNLI.splits(inputs, answers)
+
+inputs.build_vocab(train, max_size=35000, vectors="glove.6B.100d")
+answers.build_vocab(train)
+
 def embed_pair(s1_premise, s2_hypothesis, label):
     tmap={}
     tmap['sentence1'],tmap['sentence2'],tmap['gold_label'] = s1_premise,s2_hypothesis,label
