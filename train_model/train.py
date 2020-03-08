@@ -35,7 +35,7 @@ if args.word_vectors:
 answers.build_vocab(train)
 
 train_iter, dev_iter, test_iter = data.BucketIterator.splits(
-            (train, dev, test), batch_size=args.batch_size, device=args.gpu)
+            (train, dev, test), batch_size=args.batch_size, device=device)
 
 config = args
 config.n_embed = len(inputs.vocab)
