@@ -114,13 +114,13 @@ for epoch in range(args.epochs):
 
             print(dev_log_template.format(time.time()-start,
                 epoch, iterations, 1+batch_idx, len(train_iter),
-                100. * (1+batch_idx) / len(train_iter), loss.data[0], dev_loss.data[0], train_acc, dev_acc))
+                100. * (1+batch_idx) / len(train_iter), loss.item(), dev_loss.item(), train_acc, dev_acc))
 
             # update best valiation set accuracy
             if dev_acc > best_dev_acc:
                 best_dev_acc = dev_acc
                 snapshot_prefix = os.path.join(args.save_path, 'best_snapshot')
-                snapshot_path = snapshot_prefix + '_devacc_{}_devloss_{}_iter_{}_model.pt'.format(dev_acc, dev_loss.data[0], iterations)
+                snapshot_path = snapshot_prefix + '_devacc_{}_devloss_{}_iter_{}_model.pt'.format(dev_acc, dev_loss.item(), iterations)
 
                 # save model, delete previous 'best_snapshot' files
                 torch.save(model, snapshot_path)
@@ -132,4 +132,4 @@ for epoch in range(args.epochs):
             # print progress message
             print(log_template.format(time.time()-start,
                 epoch, iterations, 1+batch_idx, len(train_iter),
-                100. * (1+batch_idx) / len(train_iter), loss.data[0], ' '*8, n_correct/n_total*100, ' '*12))
+                100. * (1+batch_idx) / len(train_iter), loss.item(), ' '*8, n_correct/n_total*100, ' '*12))
