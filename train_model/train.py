@@ -92,7 +92,7 @@ for epoch in range(args.epochs):
         # checkpoint model periodically
         if iterations % args.save_every == 0:
             snapshot_prefix = os.path.join(args.save_path, 'snapshot')
-            snapshot_path = snapshot_prefix + '_acc_{:.4f}_loss_{:.6f}_iter_{}_model.pt'.format(train_acc, loss.data[0], iterations)
+            snapshot_path = snapshot_prefix + '_acc_{:.4f}_loss_{:.6f}_iter_{}_model.pt'.format(train_acc, loss.item(), iterations)
             torch.save(model, snapshot_path)
             for f in glob.glob(snapshot_prefix + '*'):
                 if f != snapshot_path:
