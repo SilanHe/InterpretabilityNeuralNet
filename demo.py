@@ -58,8 +58,6 @@ print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 
 def format_score(score):
 	return score[0] - score[1]
-
-def print_score():
 	
 
 def CD_unigram(batch, model):
