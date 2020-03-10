@@ -17,7 +17,7 @@ from torchtext import data, datasets
 # To train model, first run 'train.py' from train_model dir
 
 # get model
-snapshot_dir = 'train_model/results/'
+snapshot_dir = 'results_sst/'
 
 snapshot_file = oj(snapshot_dir, 
 					'best_snapshot_devacc_79.35779571533203_devloss_0.41613781452178955_iter_9000_model.pt')
