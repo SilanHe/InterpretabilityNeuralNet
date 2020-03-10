@@ -7,6 +7,7 @@ from torchtext import data, datasets
 from scipy.special import expit as sigmoid
 import random
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # get model
 def get_model(snapshot_file):
@@ -35,7 +36,7 @@ def get_sst():
                                        filter_pred=lambda ex: ex.label != 'neutral')
     
     train_iter, dev_iter, test_iter = data.BucketIterator.splits(
-            (train, dev, test), batch_size=1, device=0)
+            (train, dev, test), batch_size=1, device=device)
 
     return inputs, answers, train_iter, dev_iter
 
@@ -92,6 +93,7 @@ def evaluate_predictions(snapshot_file):
 
 
 # batch of [start, stop) with unigrams working
+# batch here refers to input instance
 def CD(batch, model, start, stop):
     weights = model.lstm.state_dict()
 
@@ -164,6 +166,7 @@ def CD(batch, model, start, stop):
     irrel_scores = np.dot(W_out, irrelevant_h[T - 1])
 
     return scores, irrel_scores
+
     
 def decomp_three(a, b, c, activation):
     a_contrib = 0.5 * (activation(a + c) - activation(c) + activation(a + b + c) - activation(b + c))
