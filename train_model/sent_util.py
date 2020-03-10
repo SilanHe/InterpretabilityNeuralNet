@@ -98,8 +98,8 @@ def CD(batch, model, start, stop):
     weights = model.lstm.state_dict()
 
     # Index one = word vector (i) or hidden state (h), index two = gate
-    W_ii, W_if, W_ig, W_io = np.split(weights['weight_ih_l0'], 4, 0)
-    W_hi, W_hf, W_hg, W_ho = np.split(weights['weight_hh_l0'], 4, 0)
+    W_ii, W_if, W_ig, W_io = np.split(weights['weight_ih_l0'].cpu(), 4, 0)
+    W_hi, W_hf, W_hg, W_ho = np.split(weights['weight_hh_l0'].cpu(), 4, 0)
     b_i, b_f, b_g, b_o = np.split(weights['bias_ih_l0'].cpu().numpy() + weights['bias_hh_l0'].cpu().numpy(), 4)
     word_vecs = model.embed(batch.text)[:,0].data
     T = word_vecs.size(0)
