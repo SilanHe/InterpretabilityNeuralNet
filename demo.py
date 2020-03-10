@@ -77,7 +77,7 @@ def CD_unigram(batch, model):
 	df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
 
 	with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
-		print(df1)
+		print(df)
 
 	print("_____________________________")
 
