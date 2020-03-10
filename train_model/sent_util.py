@@ -161,7 +161,7 @@ def CD(batch, model, start, stop):
         relevant_h[i] = o * new_rel_h
         irrelevant_h[i] = o * new_irrel_h
 
-    W_out = model.hidden_to_label.weight.data
+    W_out = model.hidden_to_label.weight.data.cpu()
     
     # Sanity check: scores + irrel_scores should equal the LSTM's output minus model.hidden_to_label.bias
     scores = np.dot(W_out, relevant_h[T - 1])
