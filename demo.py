@@ -58,7 +58,7 @@ print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 def CD_unigram(batch, model):
 	len_batch = len(batch)
 	text = batch.text.data[:, 0]
-	words = [inputs.vocab.itos[i[0]] for i in text]
+	words = [inputs.vocab.itos[i] for i in text]
 	scores = list()
 	scores_irrel = list()
 
