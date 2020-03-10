@@ -103,10 +103,12 @@ def CD(batch, model, start, stop):
     b_i, b_f, b_g, b_o = np.split(weights['bias_ih_l0'].cpu().numpy() + weights['bias_hh_l0'].cpu().numpy(), 4)
     word_vecs = model.embed(batch.text)[:,0].data
     T = word_vecs.size(0)
+    word_vecs = [word_vec.cpu() for word_vec in word_vecs]
     relevant = np.zeros((T, model.hidden_dim))
     irrelevant = np.zeros((T, model.hidden_dim))
     relevant_h = np.zeros((T, model.hidden_dim))
     irrelevant_h = np.zeros((T, model.hidden_dim))
+
     for i in range(T):
         if i > 0:
             prev_rel_h = relevant_h[i - 1]
