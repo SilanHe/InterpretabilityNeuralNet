@@ -72,7 +72,7 @@ def CD_unigram(batch, model):
 		scores.append(score)
 		scores_irrel.append(score_irrel)
 
-	formatted_score = [format_score(s) for s in score]
+	formatted_score = [format_score(s) for s in scores]
 
 	df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
 
