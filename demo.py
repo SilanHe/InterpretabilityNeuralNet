@@ -55,9 +55,6 @@ print(pos + pos_irrel)
 linear_bias = model.hidden_to_label.bias.data.cpu().numpy()
 print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 
-for ind in range(5):
-	CD_unigram(data[ind], model)
-
 def CD_unigram(batch, model):
 	len_batch = len(batch)
 	text = batch.text.data[:, 0]
@@ -72,4 +69,9 @@ def CD_unigram(batch, model):
 
 	print(' '.join(words[:16]), scores)
 	print("_____________________________")
+
+for ind in range(5):
+	CD_unigram(data[ind], model)
+
+
 
