@@ -11,6 +11,7 @@ from train_model import sent_util
 
 import torch
 from torchtext import data, datasets
+import pandas as pd
 
 
 
@@ -55,22 +56,31 @@ print(pos + pos_irrel)
 linear_bias = model.hidden_to_label.bias.data.cpu().numpy()
 print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 
+def format_score(score):
+	return score[0] - score[1]
+
+def print_score():
+	
+
 def CD_unigram(batch, model):
 	len_batch = len(batch.text)
-	print(len_batch)
 	text = batch.text.data[:, 0]
 	words = [inputs.vocab.itos[i] for i in text]
 	scores = list()
 	scores_irrel = list()
-	print(' '.join(words[:16]))
 
 	for i in range(len_batch):
 		score, score_irrel = sent_util.CD(batch, model, i, i)
 		scores.append(score)
 		scores_irrel.append(score_irrel)
 
-	print(scores)
-	print(scores_irrel)
+	formatted_score = [format_score(s) for s in score]
+
+	df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
+
+	with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+		print(df1)
+
 	print("_____________________________")
 
 for ind in range(5):
