@@ -7,6 +7,8 @@ from torchtext import data, datasets
 from scipy.special import expit as sigmoid
 import random
 import pandas as pd
+import torch.nn as nn
+import torch.nn.functional as F
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
