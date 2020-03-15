@@ -50,13 +50,13 @@ print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 
 # our unigram stuff
 sent_util.CD_unigram(data[high_level_comp_ind], model, inputs, answers)
-sent_util.integrated_gradients_unigram(data[high_level_comp_ind], model, inputs, answers)
+# sent_util.integrated_gradients_unigram(data[high_level_comp_ind], model, inputs, answers)
 
 for ind in range(0,20):
 	sent_util.CD_unigram(data[ind], model, inputs, answers)
 
-for ind in range(0,20):
-	sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
+# for ind in range(0,20):
+# 	sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 
 
 
