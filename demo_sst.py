@@ -18,7 +18,7 @@ snapshot_dir = 'models/'
 snapshot_file = join(snapshot_dir, 'best_rnn_model_sst.tar')
 
 # get model
-model = sent_util.get_model(snapshot_file)
+model = sent_util.get_nn(snapshot_file)
 
 # get data
 inputs, answers, train_iterator, dev_iterator = sent_util.get_sst()

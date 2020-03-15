@@ -10,6 +10,45 @@ import pandas as pd
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+TEXT, LABEL, train_iter, dev_iter = get_sst()
+
+INPUT_DIM = len(TEXT.vocab)
+EMBEDDING_DIM = 100
+HIDDEN_DIM = 256
+OUTPUT_DIM = len(LABEL.vocab)
+N_LAYERS = 2
+BIDIRECTIONAL = True
+DROPOUT = 0.5
+
+class RNN(nn.Module):
+    def __init__(self, embedding_dim, hidden_dim, output_dim, n_layers, bidirectional, dropout):
+        super(RNN, self).__init__()
+        
+        self.rnn = nn.LSTM(embedding_dim, hidden_dim, num_layers=n_layers, bidirectional=bidirectional, dropout=dropout)
+        self.fc = nn.Linear(hidden_dim*2, output_dim)
+        self.dropout = nn.Dropout(dropout)
+        
+    def forward(self, x):
+        
+        embedded = self.dropout(x)
+        
+        #embedded = [sent len, batch size, emb dim]
+        
+        output, (hidden, cell) = self.rnn(embedded)
+        
+        #output = [sent len, batch size, hid dim * num directions]
+        #hidden = [num layers * num directions, batch size, hid dim]
+        #cell = [num layers * num directions, batch size, hid dim]
+        
+        #concat the final forward (hidden[-2,:,:]) and backward (hidden[-1,:,:]) hidden layers
+        #and apply dropout
+        
+        hidden = self.dropout(torch.cat((hidden[-2,:,:], hidden[-1,:,:]), dim=1))
+                
+        #hidden = [batch size, hid dim * num directions]
+            
+        return self.fc(hidden.squeeze(0))
+
 # get model
 def get_model(snapshot_file):
     print('loading', snapshot_file)
@@ -19,6 +58,19 @@ def get_model(snapshot_file):
     except:  # load onto cpu
         model = torch.load(snapshot_file, map_location=lambda storage, loc: storage)
         print('loaded onto cpu...')
+    return model
+
+# get model
+def get_rr(path):
+    print('loading', path)
+    model = RNN(EMBEDDING_DIM, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
+    try:  # load onto gpu
+        model.load_state_dict(torch.load(path))
+        print('loaded onto gpu...')
+    except:  # load onto cpu
+        model.load_state_dict(torch.load(path), map_location=lambda storage, loc: storage)
+        print('loaded onto cpu...')
+    model.eval()
     return model
 
 # get inputs, answers, training set iterator and dev set iterator
