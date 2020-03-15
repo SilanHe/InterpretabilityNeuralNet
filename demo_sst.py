@@ -14,8 +14,8 @@ import pandas as pd
 # To train model, first run 'train.py' from train_model dir
 
 # get model path, OS safe
-snapshot_dir = 'results_sst/'
-snapshot_file = join(snapshot_dir, 'best_snapshot_devacc_79.35779571533203_devloss_0.41613781452178955_iter_9000_model.pt')
+snapshot_dir = 'models/'
+snapshot_file = join(snapshot_dir, 'best_rnn_model_sst.tar')
 
 # get model
 model = sent_util.get_model(snapshot_file)

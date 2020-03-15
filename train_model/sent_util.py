@@ -198,7 +198,7 @@ def CD_unigram(batch, model, inputs, answers):
 
     with torch.no_grad():
         model.eval()
-        pred=torch.argmax(model(batch))
+        pred=torch.argmax(model(x))
     model.train()
 
     # print sentence + CD for whole sentence
@@ -272,15 +272,14 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     # get Predicted label
     with torch.no_grad():
         model.eval()
-        pred=torch.argmax(model(batch))
+        pred=torch.argmax(model(x))
     model.train()
 
     # ig
     for k in range(T):
         model.zero_grad()
         step_input = x_dash + k * (x - x_dash) / T
-        batch.text.data = step_input
-        step_output = model(batch)
+        step_output = model(step_input)
         step_pred = torch.argmax(step_output)
         step_grad = torch.autograd.grad(step_output[pred], x)[0]
         if sum_grad is None:
@@ -316,7 +315,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 
 def get_args():
     parser = ArgumentParser(description='PyTorch/torchtext SST')
-    parser.add_argument('--epochs', type=int, default=5)
+    parser.add_argument('--epochs', type=int, default=20)
     parser.add_argument('--batch_size', type=int, default=50)
     parser.add_argument('--d_embed', type=int, default=300)
     parser.add_argument('--d_proj', type=int, default=300)
