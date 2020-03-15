@@ -88,12 +88,7 @@ def get_model(snapshot_file):
 def get_nn(path):
     print('loading', path)
     model = RNN(EMBEDDING_DIM, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
-    try:  # load onto gpu
-        model.load_state_dict(torch.load(path))
-        print('loaded onto gpu...')
-    except:  # load onto cpu
-        
-        print('loaded onto cpu...')
+    model.load_state_dict(torch.load(path))
     model.eval()
     return model
 
