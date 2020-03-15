@@ -193,7 +193,7 @@ def CD_unigram(batch, model, inputs, answers):
 
     # get predicted label
     x = model.embed(batch.text)[:,0].data
-    T = word_vecs.size(0)
+    T = x.size(0)
     word_vecs = [word_vec.cpu() for word_vec in x]
 
     with torch.no_grad():
@@ -261,7 +261,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     words = [inputs.vocab.itos[i] for i in text]
 
     x = model.embed(batch.text)[:,0].data
-    T = word_vecs.size(0)
+    T = x.size(0)
     word_vecs = [word_vec.cpu() for word_vec in x]
 
     x_dash = torch.zeros_like(x)
