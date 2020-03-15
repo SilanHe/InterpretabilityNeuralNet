@@ -85,7 +85,7 @@ def get_model(snapshot_file):
     return model
 
 # get model
-def get_rr(path):
+def get_nn(path):
     print('loading', path)
     model = RNN(EMBEDDING_DIM, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
     try:  # load onto gpu
