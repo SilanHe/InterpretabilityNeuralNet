@@ -81,8 +81,10 @@ def CD_unigram(batch, model):
 
 	print("_____________________________")
 
-for ind in range(5):
+for ind in range(50):
 	CD_unigram(data[ind], model)
+
+CD_unigram(data[high_level_comp_ind], model)
 
 
 
