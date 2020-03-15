@@ -274,7 +274,7 @@ def integrated_gradients(s, m=300):
         print("PREDICTED Label : %s"%(LABEL.vocab.itos[pred]))
         return LABEL.vocab.itos[pred], relevances
     except:
-        print "*****Error*******"
+        print("*****Error*******")
         return LABEL.vocab.itos[pred], []
 
 integrated_gradients("This film is terrible")
