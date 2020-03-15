@@ -92,7 +92,7 @@ def get_nn(path):
         model.load_state_dict(torch.load(path))
         print('loaded onto gpu...')
     except:  # load onto cpu
-        model.load_state_dict(torch.load(path), map_location=lambda storage, loc: storage)
+        
         print('loaded onto cpu...')
     model.eval()
     return model
