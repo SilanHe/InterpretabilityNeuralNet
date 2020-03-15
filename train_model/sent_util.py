@@ -20,7 +20,7 @@ def get_model(snapshot_file):
         print('loaded onto cpu...')
     return model
 
-
+# get inputs, answers, training set iterator and dev set iterator
 def get_sst():    
     inputs = data.Field(lower='preserve-case')
     answers = data.Field(sequential=False, unk_token=None)
@@ -40,6 +40,7 @@ def get_sst():
 
     return inputs, answers, train_iter, dev_iter
 
+# gets the batches of the specified dset, by default 'train'
 def get_batches(batch_nums, train_iterator, dev_iterator, dset='train'):
     print('getting batches...')
     np.random.seed(13)
@@ -67,7 +68,7 @@ def get_batches(batch_nums, train_iterator, dev_iterator, dset='train'):
             break
     return batches
 
-
+# evaluate our predictions on SST and return the last batch, the last model and the last target
 def evaluate_predictions(snapshot_file):
     print('loading', snapshot_file)
     try:  # load onto gpu
