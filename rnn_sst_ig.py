@@ -199,7 +199,7 @@ def epoch_train(N_EPOCHS = 10):
 epoch_train(20)
 
 def embed_sentence(s):
-    tokenized = [tok.text for tok in nlp.tokenizer(s.decode("utf-8"))]
+    tokenized = [tok.text for tok in nlp.tokenizer(s)]
     indexed = [TEXT.vocab.stoi[t] for t in tokenized]
     tensor = torch.LongTensor(indexed).to(device)
     tensor = tensor.unsqueeze(1)
