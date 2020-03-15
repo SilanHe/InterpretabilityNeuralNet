@@ -255,12 +255,12 @@ def CD_unigram(batch, model, inputs, answers):
     model.train()
 
     # print sentence + CD for whole sentence
-    sentence, sentence_irrel = CD(batch, model, start = 0, stop = len_batch)
+    sentence, sentence_irrel = sent_util.CD(batch, model, start = 0, stop = len_batch)
     print(' '.join(words[:len_batch]), sentence[0] - sentence[1])
 
     # for each word in the batch, get our scores by calling CD on a single word
     for i in range(len_batch):
-        score, score_irrel = CD(batch, model, i, i)
+        score, score_irrel = sent_util.CD(batch, model, i, i)
         scores.append(score)
         scores_irrel.append(score_irrel)
 
