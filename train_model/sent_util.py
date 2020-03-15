@@ -10,6 +10,28 @@ import pandas as pd
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+# get inputs, answers, training set iterator and dev set iterator
+def get_sst():    
+    inputs = data.Field(lower='preserve-case')
+    answers = data.Field(sequential=False, unk_token=None)
+
+    # build with subtrees so inputs are right
+    train_s, dev_s, test_s = datasets.SST.splits(inputs, answers, fine_grained = False, train_subtrees = True,
+                                           filter_pred=lambda ex: ex.label != 'neutral')
+    inputs.build_vocab(train_s, dev_s, test_s)
+    answers.build_vocab(train_s)
+    
+    # rebuild without subtrees to get longer sentences
+    train, dev, test = datasets.SST.splits(inputs, answers, fine_grained = False, train_subtrees = False,
+                                       filter_pred=lambda ex: ex.label != 'neutral')
+    
+    train_iter, dev_iter, test_iter = data.BucketIterator.splits(
+            (train, dev, test), batch_size=1, device=device)
+
+    return inputs, answers, train_iter, dev_iter
+
+# RNN
+
 TEXT, LABEL, train_iter, dev_iter = get_sst()
 
 INPUT_DIM = len(TEXT.vocab)
@@ -73,25 +95,7 @@ def get_rr(path):
     model.eval()
     return model
 
-# get inputs, answers, training set iterator and dev set iterator
-def get_sst():    
-    inputs = data.Field(lower='preserve-case')
-    answers = data.Field(sequential=False, unk_token=None)
 
-    # build with subtrees so inputs are right
-    train_s, dev_s, test_s = datasets.SST.splits(inputs, answers, fine_grained = False, train_subtrees = True,
-                                           filter_pred=lambda ex: ex.label != 'neutral')
-    inputs.build_vocab(train_s, dev_s, test_s)
-    answers.build_vocab(train_s)
-    
-    # rebuild without subtrees to get longer sentences
-    train, dev, test = datasets.SST.splits(inputs, answers, fine_grained = False, train_subtrees = False,
-                                       filter_pred=lambda ex: ex.label != 'neutral')
-    
-    train_iter, dev_iter, test_iter = data.BucketIterator.splits(
-            (train, dev, test), batch_size=1, device=device)
-
-    return inputs, answers, train_iter, dev_iter
 
 # gets the batches of the specified dset, by default 'train'
 # batch_nums is a list of int, each of which represent an index you wish to retrieve
