@@ -156,7 +156,7 @@ def get_batches_iterator(batch_nums, data_iterator):
 # batch here refers to input instance, which is a bunch of strings as a list of string batch.text
 # model: our sst model
 def CD(batch, model, start, stop):
-    weights = model.lstm.state_dict()
+    weights = model.rnn.lstm.state_dict()
 
     # Index one = word vector (i) or hidden state (h), index two = gate
     W_ii, W_if, W_ig, W_io = np.split(weights['weight_ih_l0'].cpu(), 4, 0)
