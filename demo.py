@@ -86,5 +86,3 @@ for ind in range(50):
 
 CD_unigram(data[high_level_comp_ind], model)
 
-
-

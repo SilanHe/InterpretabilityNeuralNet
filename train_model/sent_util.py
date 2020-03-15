@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 from torchtext import data, datasets
 from scipy.special import expit as sigmoid
 import random
+import pandas as pd
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -93,33 +94,9 @@ def get_batches(batch_nums, data_iterator):
             break
     return batches
 
-# evaluate our predictions on SST and return the last batch, the last model and the last target
-def evaluate_predictions(snapshot_file):
-    print('loading', snapshot_file)
-    try:  # load onto gpu
-        model = torch.load(snapshot_file)
-    except:  # load onto cpu
-        model = torch.load(snapshot_file, map_location=lambda storage, loc: storage)
-    inputs = data.Field()
-    answers = data.Field(sequential=False, unk_token=None)
-
-    train, dev, test = datasets.SST.splits(inputs, answers, fine_grained=False, train_subtrees=False,
-                                           filter_pred=lambda ex: ex.label != 'neutral')
-    inputs.build_vocab(train)
-    answers.build_vocab(train)
-    train_iter, dev_iter, test_iter = data.BucketIterator.splits(
-        (train, dev, test), batch_size=1, device=0)
-    train_iter.init_epoch() 
-    for batch_idx, batch in enumerate(train_iter):
-        print('batch_idx', batch_idx)
-        out = model(batch)
-        target = batch.label
-        break
-    return batch, out, target
-
-
 # batch of [start, stop) with unigrams working
-# batch here refers to input instance
+# batch here refers to input instance, which is a bunch of strings as a list of string batch.text
+# model: our sst model
 def CD(batch, model, start, stop):
     weights = model.lstm.state_dict()
 
@@ -195,6 +172,59 @@ def CD(batch, model, start, stop):
 
     return scores, irrel_scores
 
+
+    
+# batch: string inside batch object
+# model: our sst model
+# inputs: vocab for encoding input sentence
+# answers: vocab for encoding labels
+def CD_unigram(batch, model, inputs, answers):
+
+    # local function for formating score for panda printing
+    def format_score(score):
+        return score[0] - score[1]
+
+    # set up
+    len_batch = len(batch.text)
+    text = batch.text.data[:, 0]
+    words = [inputs.vocab.itos[i] for i in text]
+    scores = list()
+    scores_irrel = list()
+
+    # get predicted label
+    word_vecs = model.embed(batch.text)[:,0].data
+    T = word_vecs.size(0)
+    word_vecs = [word_vec.cpu() for word_vec in word_vecs]
+
+    x = torch.tensor(word_vecs)
+
+    with torch.no_grad():
+        model.eval()
+        pred=torch.argmax(model(x))
+    model.train()
+
+    # print sentence + CD for whole sentence
+    sentence, sentence_irrel = sent_util.CD(batch, model, start = 0, stop = len_batch)
+    print(' '.join(words[:len_batch]), sentence[0] - sentence[1])
+
+    # for each word in the batch, get our scores by calling CD on a single word
+    for i in range(len_batch):
+        score, score_irrel = sent_util.CD(batch, model, i, i)
+        scores.append(score)
+        scores_irrel.append(score_irrel)
+
+    # print using panda
+    formatted_score = [format_score(s) for s in scores]
+    df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
+
+    with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+        print(df)
+
+    print("PREDICTED Label : ", answers.vocab.itos[pred)
+    print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
+
+    # visual delimiter so its easier to see different examples
+    print("_____________________________")
     
 def decomp_three(a, b, c, activation):
     a_contrib = 0.5 * (activation(a + c) - activation(c) + activation(a + b + c) - activation(b + c))
@@ -221,6 +251,70 @@ def makedirs(name):
             # a different error happened
             raise
 
+# batch: string inside batch object
+# model: our sst model
+# inputs: vocab for encoding input sentence
+# answers: vocab for encoding labels
+def integrated_gradients_unigram(batch, model, inputs, answers):
+    
+    # set up
+    len_batch = len(batch.text)
+    text = batch.text.data[:, 0]
+    words = [inputs.vocab.itos[i] for i in text]
+
+    word_vecs = model.embed(batch.text)[:,0].data
+    T = word_vecs.size(0)
+    word_vecs = [word_vec.cpu() for word_vec in word_vecs]
+
+    x = torch.tensor(word_vecs)
+    x_dash = torch.zeros_like(x)
+    sum_grad = None
+    grad_array = None
+    x_array = None
+
+    # get Predicted label
+    with torch.no_grad():
+        model.eval()
+        pred=torch.argmax(model(x))
+    model.train()
+
+    # ig
+    for k in range(T):
+        model.zero_grad()
+        step_input = x_dash + k * (x - x_dash) / T
+        step_output = model(step_input)
+        step_pred = torch.argmax(step_output)
+        step_grad = torch.autograd.grad(step_output[pred], x)[0]
+        if sum_grad is None:
+            sum_grad = step_grad
+            grad_array = step_grad
+            x_array = step_input
+        else:
+            sum_grad += step_grad
+            grad_array = torch.cat([grad_array, step_grad])
+            x_array = torch.cat([x_array, step_input])
+
+    sum_grad = sum_grad / T
+    sum_grad = sum_grad * (x - x_dash)
+    sum_grad = sum_grad.sum(dim=2)
+
+    relevances = sum_grad.detach().cpu().numpy()
+
+    try:
+        relevances = list(np.round(np.reshape(relevances,len(words)),3))
+        df = pd.DataFrame(index=['Sentence','IntegGrad'], columns=list(range(len(words))), data=[words, relevances])
+        print("Sentence : %s"%(s))
+        with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+            print(df)
+        print("PREDICTED Label : %s"%(answers.vocab.itos[pred]))
+        print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
+        return answers.vocab.itos[pred], relevances
+    except:
+        print("*****Error*******")
+        return answers.vocab.itos[pred], []
+
+    # visual delimiter so its easier to see different examples
+    print("_____________________________")
 
 def get_args():
     parser = ArgumentParser(description='PyTorch/torchtext SST')

@@ -13,11 +13,11 @@ import pandas as pd
 
 # To train model, first run 'train.py' from train_model dir
 
-# get model
+# get model path, OS safe
 snapshot_dir = 'results_sst/'
 snapshot_file = join(snapshot_dir, 'best_snapshot_devacc_79.35779571533203_devloss_0.41613781452178955_iter_9000_model.pt')
 
-
+# get model
 model = sent_util.get_model(snapshot_file)
 
 # get data
@@ -33,7 +33,6 @@ for ind in range(6919):
 		high_level_comp_ind = ind
 		break
 
-
 # Produce CD importance scores for phrases used in figure 2
 pos, pos_irrel = sent_util.CD(data[high_level_comp_ind], model, start = 0, stop = 15)
 print(' '.join(words[:16]), pos[0] - pos[1])
@@ -44,49 +43,22 @@ print(' '.join(words[16:]), neg[0] - neg[1])
 # it 's easy to love robin tunney -- she 's pretty and she can act -- 0.545045315382
 # but it gets harder and harder to understand her choices . -1.22609390466
 
-
 # Sanity check: CD is a decomposition, so an effective way to check for bugs is to verify that the decomposition holds (up to numerical errors)
 print(pos + pos_irrel)
 linear_bias = model.hidden_to_label.bias.data.cpu().numpy()
 print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 
-def format_score(score):
-	return score[0] - score[1]
-	
-# batch: 
-def CD_unigram(batch, model):
-	len_batch = len(batch.text)
-	text = batch.text.data[:, 0]
-	words = [answers.vocab.itos[i] for i in text]
-	scores = list()
-	scores_irrel = list()
+# our unigram stuff
+sent_util.CD_unigram(data[high_level_comp_ind], model, inputs, answers)
+sent_util.integrated_gradients_unigram(data[high_level_comp_ind], model, inputs, answers)
 
-	# print label
-	print("LABEL:",answers.vocab.itos[t.label.data[0]])
+for ind in range(0,20):
+	sent_util.CD_unigram(data[ind], model, inputs, answers)
 
-	# print sentence + CD for whole sentence
-	sentence, sentence_irrel = sent_util.CD(batch, model, start = 0, stop = len_batch)
-	print(' '.join(words[:len_batch]), sentence[0] - sentence[1])
+for ind in range(0,20):
+	sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 
-	# for each word in the batch, get our scores by calling CD on a single word
-	for i in range(len_batch):
-		score, score_irrel = sent_util.CD(batch, model, i, i)
-		scores.append(score)
-		scores_irrel.append(score_irrel)
 
-	# print using panda
-	formatted_score = [format_score(s) for s in scores]
-	df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
-
-	with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
-		print(df)
-
-	print("_____________________________")
-
-for ind in range(50):
-	CD_unigram(data[ind], model)
-
-CD_unigram(data[high_level_comp_ind], model)
 
 
 
