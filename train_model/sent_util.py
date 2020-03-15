@@ -73,7 +73,7 @@ def get_batches(batch_nums, train_iterator, dev_iterator, dset='train'):
     return batches
 
 # gets the batches from data_iterator, overloaded version of above function
-def get_batches(batch_nums, data_iterator):
+def get_batches_iterator(batch_nums, data_iterator):
     print('getting batches...')
     np.random.seed(13)
     random.seed(13)
