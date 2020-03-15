@@ -41,6 +41,9 @@ def get_sst():
     return inputs, answers, train_iter, dev_iter
 
 # gets the batches of the specified dset, by default 'train'
+# batch_nums is a list of int, each of which represent an index you wish to retrieve
+# train_iterator is our iterator from get_sst()
+# dev_iterator is our iterator from get_sst()
 def get_batches(batch_nums, train_iterator, dev_iterator, dset='train'):
     print('getting batches...')
     np.random.seed(13)
@@ -53,6 +56,28 @@ def get_batches(batch_nums, train_iterator, dev_iterator, dset='train'):
         data_iterator = dev_iterator
     
     # actually get batches
+    num = 0
+    batches = {}
+    data_iterator.init_epoch() 
+    for batch_idx, batch in enumerate(data_iterator):
+        if batch_idx == batch_nums[num]:
+            batches[batch_idx] = batch
+            num +=1 
+
+        if num == max(batch_nums):
+            break
+        elif num == len(batch_nums):
+            print('found them all')
+            break
+    return batches
+
+# gets the batches from data_iterator, overloaded version of above function
+def get_batches(batch_nums, data_iterator):
+    print('getting batches...')
+    np.random.seed(13)
+    random.seed(13)
+    
+    # actually get batches that match indices in batch_nums
     num = 0
     batches = {}
     data_iterator.init_epoch() 
