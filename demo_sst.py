@@ -3,7 +3,7 @@
 import numpy as np
 import sys
 from os.path import join
-sys.path.insert(1, oj(sys.path[0], 'train_model'))
+sys.path.insert(1, join(sys.path[0], 'train_model'))
 
 from train_model import sent_util
 
