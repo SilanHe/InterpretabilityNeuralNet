@@ -51,7 +51,6 @@ def predict_entailment(s1_premise,s2_hypothesis,label=''):
         answer = model(p_emb, h_emb)
     return answers.vocab.itos[torch.max(answer, 1)[1].item()]
 
-
 # test queries
 print("A black race car starts up in front of a crowd of people.","A man is driving down a lonely road.",predict_entailment("A black race car starts up in front of a crowd of people.","A man is driving down a lonely road."))
 print("A soccer game with multiple males playing.","Some men are playing a sport.",predict_entailment("A soccer game with multiple males playing.","Some men are playing a sport."))
