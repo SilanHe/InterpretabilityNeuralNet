@@ -88,7 +88,8 @@ def get_model(snapshot_file):
 def get_nn(path):
     print('loading', path)
     model = RNN(EMBEDDING_DIM, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
-    model.load_state_dict(torch.load(path))
+    data_dicttorch.load(path)
+    model.load_state_dict(data_dict[model_state_dict])
     model.eval()
     return model
 
