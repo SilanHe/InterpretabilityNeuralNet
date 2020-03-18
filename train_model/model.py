@@ -26,7 +26,12 @@ class LSTMSentiment(nn.Module):
             self.hidden = (Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)),
                             Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)))
 
-        vecs = self.embed(batch.text)
+        # check if a batch or an input tensor
+        if isinstance(type(batch),torchtext.data.batch.Batch):
+            vecs = self.embed(batch.text)
+        elif isinstance(type(batch),Tensor):
+            vecs = batch
+
         lstm_out, self.hidden = self.lstm(vecs, self.hidden)
         logits = self.hidden_to_label(lstm_out[-1])
         #log_probs = self.log_softmax(logits)
