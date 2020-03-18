@@ -195,7 +195,6 @@ def epoch_train(N_EPOCHS = 10):
 			for tensor in best_model['model_state_dict']:
 
 				# print(best_model['model_state_dict'][tensor].dim())
-
 			best_valid_loss = valid_loss
 
 	test_loss, test_acc = evaluate(model, test_iterator, criterion)

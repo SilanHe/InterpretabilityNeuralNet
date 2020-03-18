@@ -282,7 +282,8 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
         step_output = model(step_input)
         step_pred = torch.argmax(step_output)
         print(step_output)
-        step_grad = torch.autograd.grad(step_output, x)[0]
+        print(step_output[pred.item()])
+        step_grad = torch.autograd.grad(step_output[pred.item()], x)[0]
         if sum_grad is None:
             sum_grad = step_grad
             grad_array = step_grad
@@ -306,7 +307,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
             print(df)
         
         print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
-        print("PREDICTED Label : %s"%(inputs.vocab.itos[pred.item()]))
+        print("PREDICTED Label : %s"%(answers.vocab.itos[pred.item()]))
         return answers.vocab.itos[pred], relevances
     except:
         print("*****Error*******")
