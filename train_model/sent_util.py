@@ -283,6 +283,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
         step_pred = torch.argmax(step_output)
         print(step_output)
         print(step_output[pred.item()])
+        print(step_output[pred.item()][pred.item()])
         step_grad = torch.autograd.grad(step_output[pred.item()], x)[0]
         if sum_grad is None:
             sum_grad = step_grad
