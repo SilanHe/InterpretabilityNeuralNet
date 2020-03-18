@@ -183,7 +183,7 @@ def epoch_train(N_EPOCHS = 10):
 			'emb_state_dict' : embedder.state_dict(),
 			'optimizer_state_dict': optimizer.state_dict()
 		}
-		print(cur_model.get_shape())
+		print(cur_model['model_state_dict'].get_shape())
 		torch.save(cur_model, './models/rnn_model_sst.tar')
 		if valid_loss < best_valid_loss:
 			best_model = {
@@ -193,7 +193,7 @@ def epoch_train(N_EPOCHS = 10):
 				'optimizer_state_dict': optimizer.state_dict()
 				}
 			torch.save(best_model, './models/best_rnn_model_sst.tar')
-			print(best_model.get_shape())
+			print(best_model['model_state_dict'].get_shape())
 			best_valid_loss = valid_loss
 
 	test_loss, test_acc = evaluate(model, test_iterator, criterion)
