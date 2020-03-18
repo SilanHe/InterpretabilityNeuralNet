@@ -284,7 +284,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
         print(step_output)
         print(step_output[pred.item()])
         print(step_output[pred.item()][pred.item()])
-        step_grad = torch.autograd.grad(step_output[0][pred.item()], x)[0]
+        step_grad = torch.autograd.grad(step_output[pred.item()], x)[0]
         if sum_grad is None:
             sum_grad = step_grad
             grad_array = step_grad
@@ -303,7 +303,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     try:
         relevances = list(np.round(np.reshape(relevances,len(words)),3))
         df = pd.DataFrame(index=['Sentence','IntegGrad'], columns=list(range(len(words))), data=[words, relevances])
-        print("Sentence : %s"%(s))
+        print("Sentence : %s"%(''.join(words)))
         with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
             print(df)
         
