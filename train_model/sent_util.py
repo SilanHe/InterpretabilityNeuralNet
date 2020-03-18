@@ -221,8 +221,9 @@ def CD_unigram(batch, model, inputs, answers):
     with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
         print(df)
 
-    print("PREDICTED Label : ", answers.vocab.itos[pred])
     print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
+    print(pred)
+    print("PREDICTED Label : ", answers.vocab.itos[pred])
 
     # visual delimiter so its easier to see different examples
     print("_____________________________")
@@ -306,8 +307,10 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
         print("Sentence : %s"%(s))
         with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
             print(df)
-        print("PREDICTED Label : %s"%(answers.vocab.itos[pred]))
+        
         print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
+        print(pred)
+        print("PREDICTED Label : %s"%(answers.vocab.itos[pred]))
         return answers.vocab.itos[pred], relevances
     except:
         print("*****Error*******")
