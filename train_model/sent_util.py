@@ -222,6 +222,7 @@ def CD_unigram(batch, model, inputs, answers):
         print(df)
 
     print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
+    pred = pred.eval()
     print(pred)
     print("PREDICTED Label : ", answers.vocab.itos[pred])
 
@@ -309,6 +310,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
             print(df)
         
         print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
+        pred = pred.eval()
         print(pred)
         print("PREDICTED Label : %s"%(answers.vocab.itos[pred]))
         return answers.vocab.itos[pred], relevances
