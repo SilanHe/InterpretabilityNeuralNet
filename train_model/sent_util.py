@@ -260,7 +260,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     text = batch.text.data[:, 0]
     words = [inputs.vocab.itos[i] for i in text]
 
-    x = model.embed(batch.text)[:,0].data
+    x = model.embed(batch.text)
     T = x.size(0)
     print("T",T,"x.dim()",x.dim())
     word_vecs = [word_vec.cpu() for word_vec in x]
