@@ -262,11 +262,9 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 
     x = model.embed(batch.text)
     T = x.size(0)
-    print("T",T,"x.dim()",x.dim())
     word_vecs = [word_vec.cpu() for word_vec in x]
 
     x_dash = torch.zeros_like(x)
-    print("x_dash",x_dash.dim())
     sum_grad = None
     grad_array = None
     x_array = None
@@ -281,7 +279,6 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     for k in range(T):
         model.zero_grad()
         step_input = x_dash + k * (x - x_dash) / T
-        print("inside ig",step_input.dim())
         step_output = model(step_input)
         step_pred = torch.argmax(step_output)
         print(step_output[pred.item()])
