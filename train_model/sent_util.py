@@ -195,13 +195,10 @@ def CD_unigram(batch, model, inputs, answers):
     scores_irrel = list()
 
     # get predicted label
-    x = model.embed(batch.text)[:,0].data
-    T = x.size(0)
-    word_vecs = [word_vec.cpu() for word_vec in x]
 
     with torch.no_grad():
         model.eval()
-        pred=torch.argmax(x)
+        pred=torch.argmax(model(batch))
     model.train()
 
     # print sentence + CD for whole sentence
@@ -222,7 +219,7 @@ def CD_unigram(batch, model, inputs, answers):
         print(df)
 
     print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
-    print("PREDICTED Label : ", inputs.vocab.itos[pred.item()])
+    print("PREDICTED Label : ", answers.vocab.itos[pred.item()])
 
     # visual delimiter so its easier to see different examples
     print("_____________________________")
@@ -275,7 +272,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     # get Predicted label
     with torch.no_grad():
         model.eval()
-        pred=torch.argmax(x)
+        pred=torch.argmax(model(batch))
     model.train()
 
     # ig
