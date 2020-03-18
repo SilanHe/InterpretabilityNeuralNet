@@ -30,9 +30,9 @@ class LSTMSentiment(nn.Module):
 
         # check if a batch or an input tensor
         print(type(batch))
-        if isinstance(type(batch),Batch):
+        if isinstance(batch,Batch):
             vecs = self.embed(batch.text)
-        elif isinstance(type(batch),Tensor):
+        elif isinstance(batch,Tensor):
             vecs = batch
 
         lstm_out, self.hidden = self.lstm(vecs, self.hidden)
