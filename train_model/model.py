@@ -35,12 +35,13 @@ class LSTMSentiment(nn.Module):
 		
 		elif isinstance(batch,Tensor):
 			vecs = batch
+			print("vecs.dim()",vecs.dim())
 			if self.use_gpu:
-				self.hidden = (Variable(torch.zeros(1, vecs.dim(), self.hidden_dim).cuda()),
-								Variable(torch.zeros(1, vecs.dim(), self.hidden_dim).cuda()))
+				self.hidden = (Variable(torch.zeros(1, 1, self.hidden_dim).cuda()),
+								Variable(torch.zeros(1, 1, self.hidden_dim).cuda()))
 			else:
-				self.hidden = (Variable(torch.zeros(1, vecs.dim(), self.hidden_dim)),
-								Variable(torch.zeros(1, vecs.dim(), self.hidden_dim)))
+				self.hidden = (Variable(torch.zeros(1, 1, self.hidden_dim)),
+								Variable(torch.zeros(1, 1, self.hidden_dim)))
 
 
 		lstm_out, self.hidden = self.lstm(vecs, self.hidden)
