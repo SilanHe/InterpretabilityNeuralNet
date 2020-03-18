@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch import Tensor
 from torchtext.data.batch import Batch
 from torch.autograd import Variable
 import pdb
