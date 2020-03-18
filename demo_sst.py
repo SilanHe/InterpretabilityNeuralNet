@@ -47,6 +47,7 @@ print(' '.join(words[16:]), neg[0] - neg[1])
 # Sanity check: CD is a decomposition, so an effective way to check for bugs is to verify that the decomposition holds (up to numerical errors)
 print(pos + pos_irrel)
 linear_bias = model.hidden_to_label.bias.data.cpu().numpy()
+print(type(data[high_level_comp_ind]))
 print((model(data[high_level_comp_ind]).data.cpu().numpy() - linear_bias)[0])
 
 # our unigram stuff
