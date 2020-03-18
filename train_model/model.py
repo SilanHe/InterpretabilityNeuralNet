@@ -26,6 +26,7 @@ class LSTMSentiment(nn.Module):
 		# check if a batch or an input tensor
 		if isinstance(batch,Batch):
 			vecs = self.embed(batch.text)
+			print("batch.text.size()[1]",batch.text.size()[1])
 			if self.use_gpu:
 				self.hidden = (Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim).cuda()),
 								Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim).cuda()))
