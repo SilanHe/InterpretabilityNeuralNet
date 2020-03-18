@@ -201,7 +201,7 @@ def CD_unigram(batch, model, inputs, answers):
 
     with torch.no_grad():
         model.eval()
-        pred=torch.argmax(model(x))
+        pred=torch.argmax(x)
     model.train()
 
     # print sentence + CD for whole sentence
@@ -275,7 +275,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     # get Predicted label
     with torch.no_grad():
         model.eval()
-        pred=torch.argmax(model(x))
+        pred=torch.argmax(x)
     model.train()
 
     # ig
