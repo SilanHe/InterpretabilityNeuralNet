@@ -194,7 +194,7 @@ def epoch_train(N_EPOCHS = 10):
 			torch.save(best_model, './models/best_rnn_model_sst.tar')
 			for tensor in best_model['model_state_dict']:
 
-				print(best_model['model_state_dict'][tensor].get_shape())
+				print(best_model['model_state_dict'][tensor].dim())
 
 			best_valid_loss = valid_loss
 
