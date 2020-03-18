@@ -29,7 +29,6 @@ class LSTMSentiment(nn.Module):
                             Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)))
 
         # check if a batch or an input tensor
-        print(type(batch))
         if isinstance(batch,Batch):
             vecs = self.embed(batch.text)
         elif isinstance(batch,Tensor):
