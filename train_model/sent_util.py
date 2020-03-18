@@ -303,7 +303,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
     try:
         relevances = list(np.round(np.reshape(relevances,len(words)),3))
         df = pd.DataFrame(index=['Sentence','IntegGrad'], columns=list(range(len(words))), data=[words, relevances])
-        print("Sentence : %s"%(''.join(words)))
+        print("Sentence : %s"%(' '.join(words)))
         with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
             print(df)
         
