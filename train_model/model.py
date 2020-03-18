@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torchtext.data.batch import Batch
 from torch.autograd import Variable
 import pdb
 
@@ -27,7 +28,7 @@ class LSTMSentiment(nn.Module):
                             Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)))
 
         # check if a batch or an input tensor
-        if isinstance(type(batch),torchtext.data.batch.Batch):
+        if isinstance(type(batch),Batch):
             vecs = self.embed(batch.text)
         elif isinstance(type(batch),Tensor):
             vecs = batch
