@@ -309,13 +309,12 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
         
         print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
         print("PREDICTED Label : %s"%(answers.vocab.itos[pred.item()]))
+        # visual delimiter so its easier to see different examples
+        print("_____________________________")
         return answers.vocab.itos[pred], relevances
     except:
         print("*****Error*******")
         return answers.vocab.itos[pred], []
-
-    # visual delimiter so its easier to see different examples
-    print("_____________________________")
 
 def get_args():
     parser = ArgumentParser(description='PyTorch/torchtext SST')
