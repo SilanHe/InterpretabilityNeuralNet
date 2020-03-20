@@ -43,8 +43,8 @@ for ind in range(6919):
 		list_diff_label.append(ind)
 
 print("______________________________________")
-print("Correlation", pearsonr(list_cd.list_ig))
-print("Covariance", np.cov(list_cd.list_ig))
+print("Correlation", pearsonr(list_cd,list_ig))
+print("Covariance", np.cov(list_cd,list_ig))
 print()
 print("list of indeces of inputs with differering predicted and true labels:", len(list_diff_label), "/", 6920)
 print()
