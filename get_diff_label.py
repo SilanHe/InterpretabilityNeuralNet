@@ -33,8 +33,8 @@ list_diff_label = list()
 for ind in range(6919):
 	if sent_util.diff_predicted_label(batch, model, answers):
 		sent_util.CD_unigram(data[ind], model, inputs, answers)
-    	sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
-    	list_diff_label.append(ind)
+		sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
+		list_diff_label.append(ind)
 
 print("list of indeces of inputs with differering predicted and true labels")
 for i in list_diff_label:
