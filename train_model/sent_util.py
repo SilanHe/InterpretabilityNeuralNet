@@ -316,6 +316,25 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
         print("*****Error*******")
         return answers.vocab.itos[pred], []
 
+# returns predictions
+def eval_model(batch, model, answers):
+
+    # get Predicted label
+    with torch.no_grad():
+        model.eval()
+        pred=torch.argmax(model(batch))
+    model.train()
+
+    return answers.vocab.itos[pred]
+
+# returns true if the true and predicted labels are different
+def diff_predicted_label(batch, model, answers):
+
+    true_label = answers.vocab.itos[batch.label.data[0]]
+    predicted_label = eval_model(batch, model, answers)
+
+    return true_label != predicted_label
+
 def get_args():
     parser = ArgumentParser(description='PyTorch/torchtext SST')
     parser.add_argument('--epochs', type=int, default=20)
