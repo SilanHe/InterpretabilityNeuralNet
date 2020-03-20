@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import numpy as np
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr,spearmanr
 import sys
 from os.path import join
 sys.path.insert(1, join(sys.path[0], 'train_model'))
@@ -43,7 +43,10 @@ for ind in range(6919):
 		list_diff_label.append(ind)
 
 print("______________________________________")
-print("Correlation", pearsonr(list_cd,list_ig))
+pearson_corr, _ = pearsonr(list_cd,list_ig)
+print("Pearson Correlation", pearson_corr)
+spearman_corr, _ = spearmanr(list_cd,list_ig)
+print("Spearman Correlation", spearman_corr)
 print("Covariance", np.cov(list_cd,list_ig))
 print()
 print("list of indeces of inputs with differering predicted and true labels:", len(list_diff_label), "/", 6920)
