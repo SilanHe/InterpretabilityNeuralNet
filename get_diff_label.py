@@ -31,7 +31,7 @@ data = sent_util.get_batches(batch_nums, train_iterator, dev_iterator)
 # get list of data with different predicted and true label
 list_diff_label = list()
 for ind in range(6919):
-	if sent_util.diff_predicted_label(batch, model, answers):
+	if sent_util.diff_predicted_label(data[ind], model, answers):
 		sent_util.CD_unigram(data[ind], model, inputs, answers)
 		sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 		list_diff_label.append(ind)
