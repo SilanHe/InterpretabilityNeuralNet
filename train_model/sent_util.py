@@ -223,6 +223,8 @@ def CD_unigram(batch, model, inputs, answers):
 
 	# visual delimiter so its easier to see different examples
 	print("_____________________________")
+
+	return answers.vocab.itos[pred.item()], formatted_score
 	
 def decomp_three(a, b, c, activation):
 	a_contrib = 0.5 * (activation(a + c) - activation(c) + activation(a + b + c) - activation(b + c))

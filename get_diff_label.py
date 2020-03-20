@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import numpy as np
+from scipy.stats import pearsonr
 import sys
 from os.path import join
 sys.path.insert(1, join(sys.path[0], 'train_model'))
@@ -30,12 +31,22 @@ data = sent_util.get_batches(batch_nums, train_iterator, dev_iterator)
 
 # get list of data with different predicted and true label
 list_diff_label = list()
+list_cd = np.zeros(1)
+list_ig = np.zeros(1)
+
 for ind in range(6919):
 	if sent_util.diff_predicted_label(data[ind], model, answers):
-		sent_util.CD_unigram(data[ind], model, inputs, answers)
-		sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
+		pred, list_scores_cd = sent_util.CD_unigram(data[ind], model, inputs, answers)
+		list_cd = np.append(list_cd,list_scores_cd, axis = 0)
+		pred, list_scores_ig = sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
+		list_ig = np.append(list_ig,list_scores_ig, axis = 0)
 		list_diff_label.append(ind)
 
-print("list of indeces of inputs with differering predicted and true labels")
+print("______________________________________")
+print("Correlation", pearsonr(list_cd.list_ig))
+print("Covariance", np.cov(list_cd.list_ig))
+print()
+print("list of indeces of inputs with differering predicted and true labels:", len(list_diff_label), "/", 6920)
+print()
 for i in list_diff_label:
 	print(i)
