@@ -37,7 +37,6 @@ for ind in range(6919):
 	list_cd = np.append(list_cd,list_scores_cd, axis = 0)
 	pred, list_scores_ig = sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 	list_ig = np.append(list_ig,list_scores_ig, axis = 0)
-	list_diff_label.append(ind)
 
 print("______________________________________")
 pearson_corr, _ = pearsonr(list_cd,list_ig)
