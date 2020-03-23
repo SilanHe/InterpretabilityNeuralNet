@@ -49,12 +49,19 @@ for ind in range(6919):
 	if (len(list_scores_cd) > 2 and len(list_scores_ig) > 2):
 		index_top3_cd = np.argpartition(np.absolute(list_scores_cd), -3)[-3:]
 		index_top3_ig = np.argpartition(np.absolute(list_scores_ig), -3)[-3:]
-		
+
+		len_batch = len(data[ind].text)
+		text = data[ind].text.data[:, 0]
+		words = [inputs.vocab.itos[i] for i in text]
 		overlap = np.intersect1d(index_top3_cd,index_top3_ig)
+		total_overlap += overlap.shape[0]
+
 		print("-----------------------------")
 		print("overlap ^", overlap.shape[0])
+		print("top 3 words ig", words[index_top3_ig[0]], words[index_top3_ig[1]], words[index_top3_ig[2]])
+		print("top 3 words cd", words[index_top3_cd[0]], words[index_top3_cd[1]], words[index_top3_cd[2]])
 		print("-----------------------------")
-		total_overlap += overlap.shape[0]
+		
 
 		if overlap.shape[0] == 3:
 			total_overlap_count += 1
