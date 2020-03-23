@@ -42,7 +42,7 @@ for ind in range(6919):
 	
 	list_cd = np.append(list_cd,list_scores_cd)
 	list_ig = np.append(list_ig,list_scores_ig)
-	if (len(list_scores_cd) > 2 and len(list_scores_id) > 2):
+	if (len(list_scores_cd) > 2 and len(list_scores_ig) > 2):
 		index_top3_cd = np.argpartition(np.absolute(list_scores_cd), -3)[-3:]
 		index_top3_ig = np.argpartition(np.absolute(list_scores_ig), -3)[-3:]
 		
