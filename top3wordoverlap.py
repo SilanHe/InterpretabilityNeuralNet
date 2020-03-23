@@ -40,9 +40,9 @@ for ind in range(6919):
 	pred, list_scores_cd = sent_util.CD_unigram(data[ind], model, inputs, answers)
 	pred, list_scores_ig = sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 	
-	list_cd = np.append(list_cd,list_scores_cd, axis = 0)
-	list_ig = np.append(list_ig,list_scores_ig, axis = 0)
-	if (list_scores_cd.shape[0] > 2 and list_scores_id.shape[0] > 2):
+	list_cd = np.append(list_cd,list_scores_cd)
+	list_ig = np.append(list_ig,list_scores_ig)
+	if (len(list_scores_cd) > 2 and len(list_scores_id) > 2):
 		index_top3_cd = np.argpartition(np.absolute(list_scores_cd), -3)[-3:]
 		index_top3_ig = np.argpartition(np.absolute(list_scores_ig), -3)[-3:]
 		
