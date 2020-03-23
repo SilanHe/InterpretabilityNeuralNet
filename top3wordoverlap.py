@@ -34,9 +34,13 @@ list_ig = np.zeros(1)
 
 total_overlap = 0
 
+total_overlap_count = 0
+total_overlap_list = list()
 
 for ind in range(6919):
-	
+
+	print("NUMBER:",ind)
+
 	pred, list_scores_cd = sent_util.CD_unigram(data[ind], model, inputs, answers)
 	pred, list_scores_ig = sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 	
@@ -52,6 +56,10 @@ for ind in range(6919):
 		print("-----------------------------")
 		total_overlap += overlap.shape[0]
 
+		if overlap.shape[0] == 3:
+			total_overlap_count += 1
+			total_overlap_list.append(ind)
+
 pearson_corr, _ = pearsonr(list_cd,list_ig)
 spearman_corr, _ = spearmanr(list_cd,list_ig)
 
@@ -60,3 +68,8 @@ print("Pearson Correlation", pearson_corr)
 print("Spearman Correlation", spearman_corr)
 print("Covariance", np.cov(list_cd,list_ig))
 print("AVG overlap", total_overlap / 6919)
+print("total overlap count", total_overlap_count, "/", 6919, "=", total_overlap_count / 6919)
+print()
+print("total overlap list")
+for entry in total_overlap_list:
+	print(entry)
