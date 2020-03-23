@@ -48,9 +48,9 @@ for ind in range(6919):
 	
 	overlap = np.intersect1d(index_top3_cd,index_top3_ig)
 	print("-----------------------------")
-	print("overlap ^", overlap)
+	print("overlap ^", overlap.shape[0])
 	print("-----------------------------")
-	total_overlap += overlap
+	total_overlap += overlap.shape[0]
 
 pearson_corr, _ = pearsonr(list_cd,list_ig)
 spearman_corr, _ = spearmanr(list_cd,list_ig)
