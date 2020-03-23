@@ -42,15 +42,15 @@ for ind in range(6919):
 	
 	list_cd = np.append(list_cd,list_scores_cd, axis = 0)
 	list_ig = np.append(list_ig,list_scores_ig, axis = 0)
-
-	index_top3_cd = np.argpartition(list_scores_cd, -3)[-3:]
-	index_top3_ig = np.argpartition(list_scores_ig, -3)[-3:]
-	
-	overlap = np.intersect1d(index_top3_cd,index_top3_ig)
-	print("-----------------------------")
-	print("overlap ^", overlap.shape[0])
-	print("-----------------------------")
-	total_overlap += overlap.shape[0]
+	if (list_scores_cd.shape[0] > 2 and list_scores_id.shape[0] > 2):
+		index_top3_cd = np.argpartition(np.absolute(list_scores_cd), -3)[-3:]
+		index_top3_ig = np.argpartition(np.absolute(list_scores_ig), -3)[-3:]
+		
+		overlap = np.intersect1d(index_top3_cd,index_top3_ig)
+		print("-----------------------------")
+		print("overlap ^", overlap.shape[0])
+		print("-----------------------------")
+		total_overlap += overlap.shape[0]
 
 pearson_corr, _ = pearsonr(list_cd,list_ig)
 spearman_corr, _ = spearmanr(list_cd,list_ig)
