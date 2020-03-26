@@ -39,7 +39,7 @@ total_overlap_count = 0
 total_overlap_list = list()
 
 # get sst in tree format
-sst_sentences, sst = sent_util.get_sst_PTB()
+sst_sentences, sst = sent_util.get_sst_PTB("data/trees")
 len_sst = len(sst)
 
 start = time.clock()
