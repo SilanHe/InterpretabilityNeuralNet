@@ -42,11 +42,11 @@ total_overlap_list = list()
 sst_sentences, sst = sent_util.get_sst_PTB("data/trees")
 len_sst = len(sst)
 
-start = time.clock()
+start = time.process_time()
 for index,tree in enumerate(sst):
 	batch = [word.lower() for word in sst_sentences[index]]
-	sent_util.travelTree(batch, model,tree)
-	end = time.clock()
+	sent_util.travelTree(batch, model, inputs, tree)
+	end = time.process_time()
 	print("time:",end - start)
 	if index > 0:
 		break
