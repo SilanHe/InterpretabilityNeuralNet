@@ -113,7 +113,7 @@ def CD(batch, model, start, stop):
 	if isinstance(batch, data.Batch):
 		word_vecs = model.embed(batch.text)[:,0].data
 	else:
-		word_vecs = model.embed(batch)
+		word_vecs = model.embed(batch)[:,0].data
 
 	T = word_vecs.size(0)
 	word_vecs = [word_vec.cpu() for word_vec in word_vecs]
