@@ -357,7 +357,7 @@ def travelTree(batch,model,inputs,node):
 	index_words = 0
 
 	# convert batch to tensor
-	vector = [inputs.stoi[word] for word in batch]
+	vector = [inputs.vocab.stoi[word] for word in batch]
 	word_tensor = torch.FloatTensor(vector)
 	
 	def dfs(node):
