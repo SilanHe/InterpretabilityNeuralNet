@@ -9,6 +9,8 @@ import random
 import pandas as pd
 import torch.nn as nn
 import torch.nn.functional as F
+import nltk
+import nltk.corpus
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
