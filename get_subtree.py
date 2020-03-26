@@ -46,7 +46,7 @@ start = time.clock()
 for index,tree in enumerate(sst):
 	batch = [word.lower() for word in sst_sentences[index]]
 	sent_util.travelTree(batch, model,tree)
-		end = time.clock()
-		print("time:",end - start)
-		if index > 0:
-			break
+	end = time.clock()
+	print("time:",end - start)
+	if index > 0:
+		break
