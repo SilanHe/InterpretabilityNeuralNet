@@ -101,6 +101,7 @@ def get_batches_iterator(batch_nums, data_iterator):
 
 # batch of [start, stop) with unigrams working
 # batch here refers to input instance, which is a bunch of strings as a list of string batch.text
+# batch is a LongTensor
 # model: our sst model
 def CD(batch, model, start, stop):
 	weights = weights = model.lstm.state_dict()
@@ -357,8 +358,9 @@ def travelTree(batch,model,inputs,node):
 	index_words = 0
 
 	# convert batch to tensor
-	vector = [inputs.vocab.stoi[word] for word in batch]
+	vector = [[inputs.vocab.stoi[word]] for word in batch]
 	word_tensor = torch.LongTensor(vector).to(device)
+	print(vector,word_vector)
 	
 	def dfs(node):
 		nonlocal word_tensor,model,index_words
