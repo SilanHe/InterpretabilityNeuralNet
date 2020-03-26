@@ -107,7 +107,12 @@ def CD(batch, model, start, stop):
 	W_ii, W_if, W_ig, W_io = np.split(weights['weight_ih_l0'].cpu(), 4, 0)
 	W_hi, W_hf, W_hg, W_ho = np.split(weights['weight_hh_l0'].cpu(), 4, 0)
 	b_i, b_f, b_g, b_o = np.split(weights['bias_ih_l0'].cpu().numpy() + weights['bias_hh_l0'].cpu().numpy(), 4)
-	word_vecs = model.embed(batch.text)[:,0].data
+	
+	if isinstance(batch, torchtext.data.Batch):
+		word_vecs = model.embed(batch.text)[:,0].data
+	else:
+		word_vecs = model.embed(batch)
+
 	T = word_vecs.size(0)
 	word_vecs = [word_vec.cpu() for word_vec in word_vecs]
 	relevant = np.zeros((T, model.hidden_dim))
@@ -336,6 +341,48 @@ def diff_predicted_label(batch, model, answers):
 	predicted_label = eval_model(batch, model, answers)
 
 	return true_label != predicted_label
+
+def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/data/trees"):
+	sst_reader = nltk.corpus.BracketParseCorpusReader(path, ".*.txt")
+	sst_sentences = sst_reader.sents("test.txt")
+	sst = sst_reader.parsed_sents("test.txt")
+
+	return sst_sentences, sst
+
+def travelTree(batch,model,node):
+	
+	index_words = 0
+	
+	def dfs(node):
+		nonlocal batch,model,index_words
+		if isinstance(node,str):
+			list_return = [index_words]
+			index_words += 1
+			return list_return
+
+		else:
+			score = node.label()
+			len_node = len(node)
+			
+			subtree_list_words = []
+			if len(node) > 0:
+				subtree_list_words += dfs(node[0])
+			if len(node) > 1:
+				subtree_list_words += dfs(node[1])
+			
+			# get CD score
+			CD(batch, model, min(subtree_list_words), max(subtree_list_words))
+			print("^^^^^^^^^^^^^^^^^^")
+			print("score:", score)
+			print("positive" if score >2 else "negative")
+			print("^^^^^^^^^^^^^^^^^^")
+			
+			return subtree_list_words
+
+	if node:
+		dfs(node)
+	else:
+		print("ERROR")
 
 def get_args():
 	parser = ArgumentParser(description='PyTorch/torchtext SST')
