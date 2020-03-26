@@ -351,12 +351,17 @@ def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/d
 
 	return sst_sentences, sst
 
-def travelTree(batch,model,node):
+# batch is a list of str
+def travelTree(batch,model,inputs,node):
 	
 	index_words = 0
+
+	# convert batch to tensor
+	vector = [inputs.stoi[word] for word in batch]
+	word_tensor = torch.FloatTensor(vector)
 	
 	def dfs(node):
-		nonlocal batch,model,index_words
+		nonlocal word_tensor,model,index_words
 		if isinstance(node,str):
 			list_return = [index_words]
 			index_words += 1
@@ -373,7 +378,7 @@ def travelTree(batch,model,node):
 				subtree_list_words += dfs(node[1])
 			
 			# get CD score
-			CD(batch, model, min(subtree_list_words), max(subtree_list_words))
+			CD(word_tensor, model, min(subtree_list_words), max(subtree_list_words))
 			print("^^^^^^^^^^^^^^^^^^")
 			print("score:", score)
 			print("positive" if score >2 else "negative")
