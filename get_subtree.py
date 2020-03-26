@@ -11,6 +11,7 @@ from train_model import sent_util
 import torch
 from torchtext import data, datasets
 import pandas as pd
+import time
 
 # To train model, first run 'train.py' from train_model dir
 
@@ -38,11 +39,14 @@ total_overlap_count = 0
 total_overlap_list = list()
 
 # get sst in tree format
-sst_sentences, sst = get_sst_PTB()
+sst_sentences, sst = sent_util.get_sst_PTB()
 len_sst = len(sst)
 
+start = time.clock()
 for index,tree in enumerate(sst):
-
 	batch = [word.lower() for word in sst_sentences[index]]
 	sent_util.travelTree(batch, model,tree)
-	
+        end = time.clock()
+        print("time:",end - start)
+        if index > 0:
+            break
