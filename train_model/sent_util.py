@@ -361,15 +361,12 @@ def travelTree(batch,model,inputs,node):
 	def format_score(score):
 		return score[0] - score[1]
 
-	def print_CD(text,scores,label):
+	def print_CD(text,score,label):
 
 		# print using panda
-		formatted_score = [format_score(s) for s in scores]
-		df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
-
-		with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
-			print(df)
-		print(label)
+		formatted_score = format_score(score)
+		print(' '.join(text))
+		print("CD score", formatted_score)
 		print("positive" if label >2 else "negative")
 
 		# visual delimiter so its easier to see different examples
