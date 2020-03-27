@@ -354,7 +354,12 @@ def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/d
 
 
 
+# in this function, 
 # batch is a list of str
+# model is the network
+# inputs is the vocab
+# node is the root of the tree in ptb format
+# returns list of scores and labels
 def travelTree(batch,model,inputs,node):
 
 	# local function for formating score for panda printing
@@ -380,16 +385,20 @@ def travelTree(batch,model,inputs,node):
 
 	# set up
 	len_batch = len(batch)
+
+	# get list of scores + labels
+	list_scores = list()
+	list_labels = list()
 	
 	def dfs(node):
-		nonlocal word_tensor,model,index_words
+		nonlocal word_tensor,model,index_words,list_scores,list_labels
 		if isinstance(node,str):
 			list_return = [index_words]
 			index_words += 1
 			return list_return
 
 		else:
-			score = int(node.label())
+			label = int(node.label())
 			len_node = len(node)
 			
 			subtree_list_words = []
@@ -401,9 +410,11 @@ def travelTree(batch,model,inputs,node):
 			# get CD score
 			start = min(subtree_list_words)
 			end = max(subtree_list_words)
-			scores, _ = CD(word_tensor, model, start, end)
-			print_CD(batch[start:end + 1], scores, score)
-			
+			score, _ = CD(word_tensor, model, start, end)
+			print_CD(batch[start:end + 1], score, label)
+			list_scores.append(format_score(score))
+			list_labels.append(label)
+
 			return subtree_list_words
 
 	print("______________________________________")
@@ -412,6 +423,8 @@ def travelTree(batch,model,inputs,node):
 	else:
 		print("ERROR")
 	print("______________________________________")
+
+	return list_scores, list_labels
 
 def get_args():
 	parser = ArgumentParser(description='PyTorch/torchtext SST')
