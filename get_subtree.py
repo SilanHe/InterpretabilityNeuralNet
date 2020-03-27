@@ -47,6 +47,9 @@ for index,tree in enumerate(sst):
 end = time.process_time()
 print("time:",end - start)
 
+list_cd = np.array(list_cd)
+list_label = np.array(list_label)
+
 pearson_corr, _ = pearsonr(list_cd,list_label)
 spearman_corr, _ = spearmanr(list_cd,list_label)
 
