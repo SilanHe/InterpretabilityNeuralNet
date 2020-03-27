@@ -382,8 +382,8 @@ def travelTree(batch,model,inputs,node):
 	word_tensor = torch.LongTensor(vector).to(device)
 
 	# set up
-	len_batch = len(text)
-	words = [inputs.vocab.itos[i] for i in text]
+	len_batch = len(batch)
+	words = [inputs.vocab.itos[i] for i in batch]
 	
 	def dfs(node):
 		nonlocal word_tensor,model,index_words
