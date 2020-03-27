@@ -352,14 +352,38 @@ def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/d
 
 	return sst_sentences, sst
 
+
+
 # batch is a list of str
 def travelTree(batch,model,inputs,node):
+
+	# local function for formating score for panda printing
+	def format_score(score):
+		return score[0] - score[1]
+
+	def print_CD(text,scores,label):
+
+		# print using panda
+		formatted_score = [format_score(s) for s in scores]
+		df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
+
+		with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+			print(df)
+		print(label)
+		print("positive" if label >2 else "negative")
+
+		# visual delimiter so its easier to see different examples
+		print("-------------------")
 	
 	index_words = 0
 
 	# convert batch to tensor
 	vector = [[inputs.vocab.stoi[word]] for word in batch]
 	word_tensor = torch.LongTensor(vector).to(device)
+
+	# set up
+	len_batch = len(text)
+	words = [inputs.vocab.itos[i] for i in text]
 	
 	def dfs(node):
 		nonlocal word_tensor,model,index_words
@@ -379,18 +403,17 @@ def travelTree(batch,model,inputs,node):
 				subtree_list_words += dfs(node[1])
 			
 			# get CD score
-			CD(word_tensor, model, min(subtree_list_words), max(subtree_list_words))
-			print("^^^^^^^^^^^^^^^^^^")
-			print("score:", score)
-			print("positive" if score >2 else "negative")
-			print("^^^^^^^^^^^^^^^^^^")
+			scores, _ = CD(word_tensor, model, min(subtree_list_words), max(subtree_list_words))
+			print_CD(words[min(subtree_list_words):max(subtree_list_words) + 1)], scores)
 			
 			return subtree_list_words
 
+	print("______________________________________")
 	if node:
 		dfs(node)
 	else:
 		print("ERROR")
+	print("______________________________________")
 
 def get_args():
 	parser = ArgumentParser(description='PyTorch/torchtext SST')
