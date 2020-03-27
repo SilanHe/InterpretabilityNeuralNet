@@ -383,7 +383,6 @@ def travelTree(batch,model,inputs,node):
 
 	# set up
 	len_batch = len(batch)
-	words = [inputs.vocab.itos[i] for i in batch]
 	
 	def dfs(node):
 		nonlocal word_tensor,model,index_words
@@ -406,7 +405,7 @@ def travelTree(batch,model,inputs,node):
 			start = min(subtree_list_words)
 			end = max(subtree_list_words)
 			scores, _ = CD(word_tensor, model, start, end)
-			print_CD(words[start:end + 1], scores)
+			print_CD(batch[start:end + 1], scores)
 			
 			return subtree_list_words
 
