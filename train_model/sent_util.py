@@ -403,8 +403,10 @@ def travelTree(batch,model,inputs,node):
 				subtree_list_words += dfs(node[1])
 			
 			# get CD score
-			scores, _ = CD(word_tensor, model, min(subtree_list_words), max(subtree_list_words))
-			print_CD(words[min(subtree_list_words):max(subtree_list_words) + 1)], scores)
+			start = min(subtree_list_words)
+			end = max(subtree_list_words)
+			scores, _ = CD(word_tensor, model, start, end)
+			print_CD(words[start:end + 1], scores)
 			
 			return subtree_list_words
 
