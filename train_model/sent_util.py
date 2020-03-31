@@ -104,7 +104,7 @@ def get_batches_iterator(batch_nums, data_iterator):
 # batch is a LongTensor
 # model: our sst model
 def CD(batch, model, start, stop):
-	weights = weights = model.lstm.state_dict()
+	weights = model.lstm.state_dict()
 
 	# Index one = word vector (i) or hidden state (h), index two = gate
 	W_ii, W_if, W_ig, W_io = np.split(weights['weight_ih_l0'].cpu(), 4, 0)
@@ -185,7 +185,7 @@ def CD(batch, model, start, stop):
 
 
 	
-# batch: string inside batch object
+# batch: batch
 # model: our sst model
 # inputs: vocab for encoding input sentence
 # answers: vocab for encoding labels
@@ -196,9 +196,15 @@ def CD_unigram(batch, model, inputs, answers):
 		return score[0] - score[1]
 
 	# set up
-	len_batch = len(batch.text)
-	text = batch.text.data[:, 0]
-	words = [inputs.vocab.itos[i] for i in text]
+	if isinstance(batch,Batch):
+		len_batch = len(batch.text)
+		text = batch.text.data[:, 0]
+		words = [inputs.vocab.itos[i] for i in text]
+	elif isinstance(batch,Tensor):
+		text = batch.data[:, 0]
+		len_batch = len(text)
+		words = [inputs.vocab.itos[i] for i in text]
+
 	scores = list()
 	scores_irrel = list()
 
@@ -264,13 +270,21 @@ def makedirs(name):
 # inputs: vocab for encoding input sentence
 # answers: vocab for encoding labels
 def integrated_gradients_unigram(batch, model, inputs, answers):
-	
-	# set up
-	len_batch = len(batch.text)
-	text = batch.text.data[:, 0]
-	words = [inputs.vocab.itos[i] for i in text]
 
-	x = model.embed(batch.text)
+	# set up
+	if isinstance(batch,Batch):
+		len_batch = len(batch.text)
+		text = batch.text.data[:, 0]
+		words = [inputs.vocab.itos[i] for i in text]
+		x = model.embed(batch.text)
+		len_batch = len(batch.text)
+	elif isinstance(batch,Tensor):
+		text = batch.data[:, 0]
+		len_batch = len(text)
+		words = [inputs.vocab.itos[i] for i in text]
+		x = model.embed(batch)
+		len_batch = len(words)
+	
 	T = x.size(0)
 	word_vecs = [word_vec.cpu() for word_vec in x]
 
@@ -351,6 +365,61 @@ def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/d
 	sst = sst_reader.parsed_sents("test.txt")
 
 	return sst_sentences, sst
+
+# in this function, 
+# batch is a list of str
+# model is the network
+# inputs is the vocab
+# node is the root of the tree in ptb format
+# returns list of scores and labels
+def travelTreeUnigram(batch,model,inputs,answers,node):
+
+	# convert batch to tensor
+	vector = [[inputs.vocab.stoi[word]] for word in batch]
+	word_tensor = torch.LongTensor(vector).to(device)
+
+	# set up
+	len_batch = len(batch)
+	index_words = 0
+
+	# get list of scores + labels
+	list_scores_ig = list()
+	list_scores_cd = list()
+	list_labels = list()
+	
+	def dfs(node):
+		nonlocal word_tensor,model,index_words,list_scores,list_labels
+		if isinstance(node,str):
+			label = int(node.label())
+			list_labels.append(label)
+			index_words += 1
+		else:
+			dfs(node[0])
+			dfs(node[1])
+
+	def print_labels(sentence,list_scores):
+		df = pd.DataFrame(index=['SST','Labels'], columns=list(range(len_batch)), data=[sentence, list_scores])
+
+		with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+			print(df)
+
+		print("_____________________________")
+			
+
+	print("______________________________________")
+	
+	if node:
+		dfs(node)
+	else:
+		print("ERROR")
+
+	integrated_gradients_unigram(word_tensor, model, inputs, answers)
+	CD_unigram(word_tensor, model, inputs, answers)
+	print_labels(batch,list_labels)
+	
+	print("______________________________________")
+
+	return list_scores_ig, list_scores_cd, list_labels
 
 
 
