@@ -42,7 +42,7 @@ class LSTMSentiment(nn.Module):
 				self.hidden = (Variable(torch.zeros(1, 1, self.hidden_dim)),
 								Variable(torch.zeros(1, 1, self.hidden_dim)))
 
-
+			print(vecs)
 		lstm_out, self.hidden = self.lstm(vecs, self.hidden)
 		logits = self.hidden_to_label(lstm_out[-1])
 		#log_probs = self.log_softmax(logits)

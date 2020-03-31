@@ -296,7 +296,6 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 	grad_array = None
 	x_array = None
 
-	print(batch)
 	# get Predicted label
 	with torch.no_grad():
 		model.eval()
