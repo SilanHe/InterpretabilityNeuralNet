@@ -388,7 +388,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 	list_labels = list()
 	
 	def dfs(node):
-		nonlocal word_tensor,model,index_words,list_scores,list_labels
+		nonlocal word_tensor,model,index_words,list_scores_ig,list_scores_cd,list_labels
 		if isinstance(node,str):
 			label = int(node.label())
 			list_labels.append(label)
@@ -413,9 +413,12 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 	else:
 		print("ERROR")
 
-	integrated_gradients_unigram(word_tensor, model, inputs, answers)
-	CD_unigram(word_tensor, model, inputs, answers)
+	_, list_ig = integrated_gradients_unigram(word_tensor, model, inputs, answers)
+	_, list_cd = CD_unigram(word_tensor, model, inputs, answers)
 	print_labels(batch,list_labels)
+
+	list_scores_ig += list_ig
+	list_scores_cd += list_cd
 	
 	print("______________________________________")
 
