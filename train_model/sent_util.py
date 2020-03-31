@@ -387,15 +387,17 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 	list_scores_cd = list()
 	list_labels = list()
 	
-	def dfs(node):
+	def dfs(node,score):
 		nonlocal word_tensor,model,index_words,list_scores_ig,list_scores_cd,list_labels
 		if isinstance(node,str):
-			label = int(node.label())
-			list_labels.append(label)
+			list_labels.append(score)
 			index_words += 1
 		else:
-			dfs(node[0])
-			dfs(node[1])
+			label = int(node.label())
+			if len(node) > 0:
+				dfs(node[0],label)
+			if len(node) > 1:
+				dfs(node[1],label)
 
 	def print_labels(sentence,list_scores):
 		df = pd.DataFrame(index=['SST','Labels'], columns=list(range(len_batch)), data=[sentence, list_scores])
