@@ -202,6 +202,7 @@ def CD_unigram(batch, model, inputs, answers):
 		len_batch = len(batch.text)
 		text = batch.text.data[:, 0]
 		words = [inputs.vocab.itos[i] for i in text]
+
 	elif isinstance(batch,Tensor):
 		text = batch.data[:, 0]
 		len_batch = len(text)
@@ -210,12 +211,12 @@ def CD_unigram(batch, model, inputs, answers):
 	scores = list()
 	scores_irrel = list()
 
-	# get predicted label
-
+	
 	with torch.no_grad():
 		model.eval()
 		pred=torch.argmax(model(batch))
 	model.train()
+	
 
 	# print sentence + CD for whole sentence
 	sentence, sentence_irrel = CD(batch, model, start = 0, stop = len_batch)
@@ -295,6 +296,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 	grad_array = None
 	x_array = None
 
+	print(batch)
 	# get Predicted label
 	with torch.no_grad():
 		model.eval()
