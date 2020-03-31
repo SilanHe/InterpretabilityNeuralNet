@@ -30,6 +30,7 @@ batch_nums = list(range(6920))
 data = sent_util.get_batches(batch_nums, train_iterator, dev_iterator)
 
 # setup for data collection
+list_ig = list()
 list_cd = list()
 list_label = list()
 
@@ -40,20 +41,31 @@ len_sst = len(sst)
 start = time.process_time()
 for index,tree in enumerate(sst):
 	batch = [word.lower() for word in sst_sentences[index]]
-	cd,label = sent_util.travelTree(batch, model, inputs, tree)
+	ig,cd,label = sent_util.travelTreeUnigram(batch, model, inputs, answers, tree)
+
+	list_ig += ig
 	list_cd += cd
 	list_label += label
 
 end = time.process_time()
 print("time:",end - start)
 
+list_ig = np.array(list_ig)
 list_cd = np.array(list_cd)
 list_label = np.array(list_label)
 
-pearson_corr, _ = pearsonr(list_cd,list_label)
-spearman_corr, _ = spearmanr(list_cd,list_label)
+pearson_corr_cd, _ = pearsonr(list_cd,list_label)
+spearman_corr_cd, _ = spearmanr(list_cd,list_label)
+
+pearson_corr_ig, _ = pearsonr(list_ig,list_label)
+spearman_corr_ig, _ = spearmanr(list_ig,list_label)
 
 print("______________________________________")
-print("Pearson Correlation", pearson_corr)
-print("Spearman Correlation", spearman_corr)
-print("Covariance", np.cov(list_cd,list_label))
+print("Pearson Correlation CD", pearson_corr_cd)
+print("Spearman Correlation CD", spearman_corr_cd)
+print("Covariance CD", np.cov(list_cd,list_label))
+
+print("______________________________________")
+print("Pearson Correlation IG", pearson_corr_ig)
+print("Spearman Correlation IG", spearman_corr_ig)
+print("Covariance IG", np.cov(list_ig,list_label))
