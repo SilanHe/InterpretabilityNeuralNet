@@ -411,7 +411,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 	print("______________________________________")
 	
 	if node:
-		dfs(node)
+		dfs(node, 0)
 	else:
 		print("ERROR")
 
