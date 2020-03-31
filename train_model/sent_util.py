@@ -5,6 +5,7 @@ import numpy as np
 from argparse import ArgumentParser
 from torchtext import data, datasets
 from torchtext.data.batch import Batch
+from torch import Tensor
 from scipy.special import expit as sigmoid
 import random
 import pandas as pd
