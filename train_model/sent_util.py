@@ -239,8 +239,8 @@ def CD_unigram(batch, model, inputs, answers):
 
 	with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
 		print(df)
-
-	print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
+	if isinstance(batch,Batch):
+		print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
 	print("PREDICTED Label : ", answers.vocab.itos[pred.item()])
 
 	# visual delimiter so its easier to see different examples
