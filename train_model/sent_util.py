@@ -281,6 +281,8 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 		words = [inputs.vocab.itos[i] for i in text]
 		x = model.embed(batch.text)
 		len_batch = len(batch.text)
+
+		print(batch.text)
 	elif isinstance(batch,Tensor):
 		text = batch.data[:, 0]
 		len_batch = len(text)
