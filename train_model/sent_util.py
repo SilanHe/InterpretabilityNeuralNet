@@ -203,20 +203,24 @@ def CD_unigram(batch, model, inputs, answers):
 		text = batch.text.data[:, 0]
 		words = [inputs.vocab.itos[i] for i in text]
 
+		with torch.no_grad():
+			model.eval()
+			pred=torch.argmax(model(batch))
+		model.train()
+
 	elif isinstance(batch,Tensor):
 		text = batch.data[:, 0]
 		len_batch = len(text)
 		words = [inputs.vocab.itos[i] for i in text]
-		batch = model.embed(batch)
+		x = model.embed(batch)
+
+		with torch.no_grad():
+			model.eval()
+			pred=torch.argmax(model(x))
+		model.train()
 
 	scores = list()
 	scores_irrel = list()
-
-	
-	with torch.no_grad():
-		model.eval()
-		pred=torch.argmax(model(batch))
-	model.train()
 	
 
 	# print sentence + CD for whole sentence
