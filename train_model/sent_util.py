@@ -207,6 +207,7 @@ def CD_unigram(batch, model, inputs, answers):
 		text = batch.data[:, 0]
 		len_batch = len(text)
 		words = [inputs.vocab.itos[i] for i in text]
+		batch = model.embed(batch)
 
 	scores = list()
 	scores_irrel = list()
