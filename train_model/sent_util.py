@@ -340,7 +340,8 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 		with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
 			print(df)
 		
-		print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
+		if isinstance(batch,Batch):
+			print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
 		print("PREDICTED Label : %s"%(answers.vocab.itos[pred.item()]))
 		# visual delimiter so its easier to see different examples
 		print("_____________________________")
