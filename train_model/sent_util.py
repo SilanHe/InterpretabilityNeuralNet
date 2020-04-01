@@ -282,7 +282,6 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 		x = model.embed(batch.text)
 		len_batch = len(batch.text)
 
-		print(batch.text)
 	elif isinstance(batch,Tensor):
 		text = batch.data[:, 0]
 		len_batch = len(text)
@@ -301,7 +300,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers):
 	# get Predicted label
 	with torch.no_grad():
 		model.eval()
-		pred=torch.argmax(model(batch))
+		pred=torch.argmax(model(x))
 	model.train()
 
 	# ig
