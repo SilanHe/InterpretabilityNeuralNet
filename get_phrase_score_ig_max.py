@@ -50,7 +50,7 @@ len_sst = len(sst)
 start = time.process_time()
 for index,tree in enumerate(sst):
 	batch = [word.lower() for word in sst_sentences[index]]
-	cd,ig,label = sent_util.travelTree_IG_CD(batch, model, inputs, answers, magnitude, tree) # get ig phrase level scores as well using sum baseline
+	cd,ig,label = sent_util.travelTree_IG_CD(batch, model, inputs, answers, tree, magnitude) # get ig phrase level scores as well using sum baseline
 
 	list_ig += ig
 	list_cd += cd
