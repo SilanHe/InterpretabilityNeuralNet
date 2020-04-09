@@ -389,6 +389,43 @@ def integrated_gradients_sum_baseline(batch, model, inputs, answers, start, stop
 
 	return label, score_ig
 
+# batch: string inside batch object
+# model: our sst model
+# inputs: vocab for encoding input sentence
+# answers: vocab for encoding labels
+def integrated_gradients_function(batch, model, inputs, answers, start, stop, fun, output = True):
+
+	def print_IG(text,score,label):
+
+		# print using panda
+		print(' '.join(text))
+		print("IG score", join)
+		print(label)
+
+		# visual delimiter so its easier to see different examples
+		print("-------------------")
+
+	# set up
+	if isinstance(batch,Batch):
+		text = batch.text.data[:, 0]
+		words = [inputs.vocab.itos[i] for i in text]
+		x = model.embed(batch.text)
+		len_batch = len(batch.text)
+
+	elif isinstance(batch,Tensor):
+		text = batch.data[:, 0]
+		words = [inputs.vocab.itos[i] for i in text]
+		x = model.embed(batch)
+		len_batch = len(words)
+
+	label, relevances = integrated_gradients_unigram(batch, model, inputs, answers, output = False)
+
+	score_ig = fun(relevances[start:stop+1])
+	if output:
+		print_IG(words[start:stop+1],score_ig,label)
+
+	return label, score_ig
+
 
 # returns predictions
 def eval_model(batch, model, answers):
@@ -562,7 +599,7 @@ def travelTree(batch,model,inputs,node,output = True):
 # inputs is the vocab
 # node is the root of the tree in ptb format
 # returns list of scores and labels
-def travelTree_IG_CD(batch,model,inputs, answers, node, output = True):
+def travelTree_IG_CD(batch,model,inputs, answers, node, fun, output = True):
 
 	# local function for formating score for panda printing
 	def format_score(score):
@@ -617,8 +654,7 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, output = True):
 			cd_score, _ = CD(word_tensor, model, start, end)
 
 			# get IG score
-			_, ig_score = integrated_gradients_sum_baseline(word_tensor, model, inputs, answers, start, end, output = False)
-			
+			_, ig_score = integrated_gradients_function(word_tensor, model, inputs, answers, start, end, fun, output = False)
 			
 			list_scores_cd.append(format_score(cd_score))
 			list_scores_ig.append(ig_score)

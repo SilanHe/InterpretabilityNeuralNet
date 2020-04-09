@@ -13,6 +13,15 @@ from torchtext import data, datasets
 import pandas as pd
 import time
 
+# function
+def magnitude(l):
+	xs = np.array(l)
+	xs_abs = np.abs(xs)
+	max_index = np.argmax(xs_abs)
+	x = xs[max_index]
+
+	return x
+
 # To train model, first run 'train.py' from train_model dir
 
 # get model path, OS safe
@@ -41,7 +50,7 @@ len_sst = len(sst)
 start = time.process_time()
 for index,tree in enumerate(sst):
 	batch = [word.lower() for word in sst_sentences[index]]
-	cd,ig,label = sent_util.travelTree_IG_CD(batch, model, inputs, answers, sum, tree) # get ig phrase level scores as well using sum baseline
+	cd,ig,label = sent_util.travelTree_IG_CD(batch, model, inputs, answers, magnitude, tree) # get ig phrase level scores as well using sum baseline
 
 	list_ig += ig
 	list_cd += cd
