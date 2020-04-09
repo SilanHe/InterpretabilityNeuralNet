@@ -595,7 +595,7 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, output = True):
 	list_labels = list()
 	
 	def dfs(node):
-		nonlocal word_tensor,model,index_words,list_scores,list_labels
+		nonlocal word_tensor,model,index_words,list_scores_cd, list_scores_ig,list_labels
 		if isinstance(node,str):
 			list_return = [index_words]
 			index_words += 1
