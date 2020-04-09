@@ -191,7 +191,7 @@ def CD(batch, model, start, stop):
 # model: our sst model
 # inputs: vocab for encoding input sentence
 # answers: vocab for encoding labels
-def CD_unigram(batch, model, inputs, answers, output = True):
+def CD_unigram(batch, model, inputs, answers):
 
 	# local function for formating score for panda printing
 	def format_score(score):
@@ -235,17 +235,16 @@ def CD_unigram(batch, model, inputs, answers, output = True):
 
 	# print using panda
 	formatted_score = [format_score(s) for s in scores]
-	if output:
-		df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
+	df = pd.DataFrame(index=['SST','ContextualDecomp'], columns=list(range(len_batch)), data=[words, formatted_score])
 
-		with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
-			print(df)
-		if isinstance(batch,Batch):
-			print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
-		print("PREDICTED Label : ", answers.vocab.itos[pred.item()])
+	with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+		print(df)
+	if isinstance(batch,Batch):
+		print("TRUE Label : ",answers.vocab.itos[batch.label.data[0]])
+	print("PREDICTED Label : ", answers.vocab.itos[pred.item()])
 
-		# visual delimiter so its easier to see different examples
-		print("_____________________________")
+	# visual delimiter so its easier to see different examples
+	print("_____________________________")
 
 	return answers.vocab.itos[pred.item()], formatted_score
 	
@@ -278,10 +277,11 @@ def makedirs(name):
 # model: our sst model
 # inputs: vocab for encoding input sentence
 # answers: vocab for encoding labels
-def integrated_gradients_unigram(batch, model, inputs, answers, output = True):
+def integrated_gradients_unigram(batch, model, inputs, answers):
 
 	# set up
 	if isinstance(batch,Batch):
+		len_batch = len(batch.text)
 		text = batch.text.data[:, 0]
 		words = [inputs.vocab.itos[i] for i in text]
 		x = model.embed(batch.text)
@@ -289,6 +289,7 @@ def integrated_gradients_unigram(batch, model, inputs, answers, output = True):
 
 	elif isinstance(batch,Tensor):
 		text = batch.data[:, 0]
+		len_batch = len(text)
 		words = [inputs.vocab.itos[i] for i in text]
 		x = model.embed(batch)
 		len_batch = len(words)
@@ -332,63 +333,22 @@ def integrated_gradients_unigram(batch, model, inputs, answers, output = True):
 
 	relevances = sum_grad.detach().cpu().numpy()
 
-
 	try:
 		relevances = list(np.round(np.reshape(relevances,len(words)),3))
-		if output:
-			df = pd.DataFrame(index=['Sentence','IntegGrad'], columns=list(range(len(words))), data=[words, relevances])
-			print("Sentence : %s"%(' '.join(words)))
-			with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
-				print(df)
-			
-			if isinstance(batch,Batch):
-				print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
-			print("PREDICTED Label : %s"%(answers.vocab.itos[pred.item()]))
-			# visual delimiter so its easier to see different examples
-			print("_____________________________")
+		df = pd.DataFrame(index=['Sentence','IntegGrad'], columns=list(range(len(words))), data=[words, relevances])
+		print("Sentence : %s"%(' '.join(words)))
+		with pd.option_context('display.max_rows', None, 'display.max_columns', 30):
+			print(df)
+		
+		if isinstance(batch,Batch):
+			print("TRUE Label : %s"%(answers.vocab.itos[batch.label.data[0]]))
+		print("PREDICTED Label : %s"%(answers.vocab.itos[pred.item()]))
+		# visual delimiter so its easier to see different examples
+		print("_____________________________")
 		return answers.vocab.itos[pred], relevances
 	except:
-		if output:
-			print("*****Error*******")
+		print("*****Error*******")
 		return answers.vocab.itos[pred], []
-
-# batch: string inside batch object
-# model: our sst model
-# inputs: vocab for encoding input sentence
-# answers: vocab for encoding labels
-def integrated_gradients_sum_baseline(batch, model, inputs, answers, start, stop, output = True):
-
-	def print_IG(text,score,label):
-
-		# print using panda
-		print(' '.join(text))
-		print("IG score", join)
-		print(label)
-
-		# visual delimiter so its easier to see different examples
-		print("-------------------")
-
-	# set up
-	if isinstance(batch,Batch):
-		text = batch.text.data[:, 0]
-		words = [inputs.vocab.itos[i] for i in text]
-		x = model.embed(batch.text)
-		len_batch = len(batch.text)
-
-	elif isinstance(batch,Tensor):
-		text = batch.data[:, 0]
-		words = [inputs.vocab.itos[i] for i in text]
-		x = model.embed(batch)
-		len_batch = len(words)
-
-	label, relevances = integrated_gradients_unigram(batch, model, inputs, answers, output = False)
-
-	score_ig = sum(relevances[start:stop+1])
-	if output:
-		print_IG(words[start:stop+1],score_ig,label)
-
-	return label, score_ig
-
 
 # returns predictions
 def eval_model(batch, model, answers):
@@ -458,7 +418,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 		print("_____________________________")
 			
 
-	
+	print("______________________________________")
 	
 	if node:
 		dfs(node, 0)
@@ -467,14 +427,12 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 
 	_, list_ig = integrated_gradients_unigram(word_tensor, model, inputs, answers)
 	_, list_cd = CD_unigram(word_tensor, model, inputs, answers)
+	print_labels(batch,list_labels)
+
 	list_scores_ig += list_ig
 	list_scores_cd += list_cd
-
-	if output:
-		print("______________________________________")
-		print_labels(batch,list_labels)
-		
-		print("______________________________________")
+	
+	print("______________________________________")
 
 	return list_scores_ig, list_scores_cd, list_labels
 
@@ -486,7 +444,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 # inputs is the vocab
 # node is the root of the tree in ptb format
 # returns list of scores and labels
-def travelTree(batch,model,inputs,node,output = True):
+def travelTree(batch,model,inputs,node):
 
 	# local function for formating score for panda printing
 	def format_score(score):
@@ -537,109 +495,20 @@ def travelTree(batch,model,inputs,node,output = True):
 			start = min(subtree_list_words)
 			end = max(subtree_list_words)
 			score, _ = CD(word_tensor, model, start, end)
-			if output:
-				print_CD(batch[start:end + 1], score, label)
+			print_CD(batch[start:end + 1], score, label)
 			list_scores.append(format_score(score))
 			list_labels.append(label)
 
 			return subtree_list_words
 
-	if output:
-		print("______________________________________")
+	print("______________________________________")
 	if node:
 		dfs(node)
 	else:
 		print("ERROR")
-	
-	if output:
-		print("______________________________________")
+	print("______________________________________")
 
 	return list_scores, list_labels
-
-# in this function, 
-# batch is a list of str
-# model is the network
-# inputs is the vocab
-# node is the root of the tree in ptb format
-# returns list of scores and labels
-def travelTree_IG_CD(batch,model,inputs, answers, node, output = True):
-
-	# local function for formating score for panda printing
-	def format_score(score):
-		return score[0] - score[1]
-
-	def print_scores( text, score_cd, score_ig, label):
-
-		# print using panda
-		formatted_score = format_score(score_cd)
-		print(' '.join(text))
-		print("CD score", formatted_score)
-		print("IG score", score_ig)
-		print("positive" if label >2 else "negative")
-
-		# visual delimiter so its easier to see different examples
-		print("-------------------")
-	
-	index_words = 0
-
-	# convert batch to tensor
-	vector = [[inputs.vocab.stoi[word]] for word in batch]
-	word_tensor = torch.LongTensor(vector).to(device)
-
-	# set up
-	len_batch = len(batch)
-
-	# get list of scores + labels
-	list_scores_cd = list()
-	list_scores_ig = list()
-	list_labels = list()
-	
-	def dfs(node):
-		nonlocal word_tensor,model,index_words,list_scores,list_labels
-		if isinstance(node,str):
-			list_return = [index_words]
-			index_words += 1
-			return list_return
-
-		else:
-			label = int(node.label())
-			len_node = len(node)
-			
-			subtree_list_words = []
-			if len(node) > 0:
-				subtree_list_words += dfs(node[0])
-			if len(node) > 1:
-				subtree_list_words += dfs(node[1])
-			
-			# get CD score
-			start = min(subtree_list_words)
-			end = max(subtree_list_words)
-			cd_score, _ = CD(word_tensor, model, start, end)
-
-			# get IG score
-			_, ig_score = integrated_gradients_sum_baseline(word_tensor, model, inputs, answers, start, end, output = False)
-			
-			
-			list_scores_cd.append(format_score(cd_score))
-			list_scores_ig.append(ig_score)
-			list_labels.append(label)
-
-			if output:
-				print_scores(batch[start:end + 1], cd_score, ig_score, label)
-
-			return subtree_list_words
-
-	if output:
-		print("______________________________________")
-	if node:
-		dfs(node)
-	else:
-		print("ERROR")
-	
-	if output:
-		print("______________________________________")
-
-	return list_scores_cd, list_scores_ig, list_labels
 
 def get_args():
 	parser = ArgumentParser(description='PyTorch/torchtext SST')
