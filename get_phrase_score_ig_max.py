@@ -42,6 +42,7 @@ data = sent_util.get_batches(batch_nums, train_iterator, dev_iterator)
 list_ig = list()
 list_cd = list()
 list_label = list()
+list_len_sentence = list()
 
 # get sst in tree format
 sst_sentences, sst = sent_util.get_sst_PTB("data/trees")
@@ -55,6 +56,7 @@ for index,tree in enumerate(sst):
 	list_ig += ig
 	list_cd += cd
 	list_label += label
+	list_len_sentence += len(cd)
 
 end = time.process_time()
 print("time:",end - start)
@@ -62,6 +64,26 @@ print("time:",end - start)
 list_ig = np.array(list_ig)
 list_cd = np.array(list_cd)
 list_label = np.array(list_label)
+
+list_sum = list_ig + list_cd # sum of ig + cd baseline
+list_reweigh = list() # reweighted baseline
+
+index_list = 0
+for len_sentence in list_len_sentence:
+
+	# reweighting baseline, reweigh according to magnitude
+	largest_magnitude = magnitude(list_ig[index_list:index_list+len_sentence])
+
+	for index in range(index_list,index_list+len_sentence):
+		list_reweigh.append(list_cd[index] * abs(list_ig[index]) / largest_magnitude)
+
+	index_list+=len_sentence
+
+pearson_coor_sum, _ = pearsonr(list_sum,list_label)
+spearman_coor_sum, _ = spearmanr(list_sum,list_label) 
+
+pearson_coor_reweigh, _ = pearsonr(list_reweigh,list_label)
+spearman_coor_reweigh, _ = spearmanr(list_reweigh,list_label) 
 
 pearson_corr_cd, _ = pearsonr(list_cd,list_label)
 spearman_corr_cd, _ = spearmanr(list_cd,list_label)
@@ -78,3 +100,14 @@ print("______________________________________")
 print("Pearson Correlation IG", pearson_corr_ig)
 print("Spearman Correlation IG", spearman_corr_ig)
 print("Covariance IG", np.cov(list_ig,list_label))
+
+
+print("______________________________________")
+print("Pearson Correlation IG + CD", pearson_corr_sum)
+print("Spearman Correlation IG + CD", spearman_corr_sum)
+print("Covariance IG + CD", np.cov(list_sum,list_label))
+
+print("______________________________________")
+print("Pearson Correlation Reweighted CD", pearson_corr_reweigh)
+print("Spearman Correlation Reweighted CD", spearman_corr_reweigh)
+print("Covariance Reweighted CD", np.cov(list_reweigh,list_label))
