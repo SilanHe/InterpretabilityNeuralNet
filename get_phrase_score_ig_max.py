@@ -82,8 +82,8 @@ for len_sentence in list_len_sentence:
 pearson_corr_sum, _ = pearsonr(list_sum,list_label)
 spearman_corr_sum, _ = spearmanr(list_sum,list_label) 
 
-pearson_coor_reweigh, _ = pearsonr(list_reweigh,list_label)
-spearman_coor_reweigh, _ = spearmanr(list_reweigh,list_label) 
+pearson_corr_reweigh, _ = pearsonr(list_reweigh,list_label)
+spearman_corr_reweigh, _ = spearmanr(list_reweigh,list_label) 
 
 pearson_corr_cd, _ = pearsonr(list_cd,list_label)
 spearman_corr_cd, _ = spearmanr(list_cd,list_label)
