@@ -56,7 +56,7 @@ for index,tree in enumerate(sst):
 	list_ig += ig
 	list_cd += cd
 	list_label += label
-	list_len_sentence += len(cd)
+	list_len_sentence.append(len(cd))
 
 end = time.process_time()
 print("time:",end - start)
@@ -77,7 +77,7 @@ for len_sentence in list_len_sentence:
 	for index in range(index_list,index_list+len_sentence):
 		list_reweigh.append(list_cd[index] * abs(list_ig[index]) / largest_magnitude)
 
-	index_list+=len_sentence
+	index_list += len_sentence
 
 pearson_coor_sum, _ = pearsonr(list_sum,list_label)
 spearman_coor_sum, _ = spearmanr(list_sum,list_label) 
