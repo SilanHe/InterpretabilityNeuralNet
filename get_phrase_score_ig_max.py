@@ -6,6 +6,8 @@ import sys
 from os.path import join
 sys.path.insert(1, join(sys.path[0], 'train_model'))
 
+from scipy.special import softmax
+
 from train_model import sent_util
 
 import torch
@@ -67,6 +69,8 @@ list_label = np.array(list_label)
 
 list_sum = list_ig + list_cd # sum of ig + cd baseline
 list_reweigh = list() # reweighted baseline
+list_softmax_ig = zeros(1)
+list_softmax_cd = zeros(1)
 
 index_list = 0
 for len_sentence in list_len_sentence:
@@ -77,13 +81,13 @@ for len_sentence in list_len_sentence:
 	for index in range(index_list,index_list+len_sentence):
 		list_reweigh.append(list_cd[index] * abs(list_ig[index]) / largest_magnitude)
 
+	list_softmax_ig = numpy.append(list_softmax_ig,softmax(list_ig[index:index_list+len_sentence]))
+	list_softmax_cd = numpy.append(list_softmax_ig,softmax(list_cd[index:index_list+len_sentence]))
+
 	index_list += len_sentence
 
-pearson_corr_sum, _ = pearsonr(list_sum,list_label)
-spearman_corr_sum, _ = spearmanr(list_sum,list_label) 
-
-pearson_corr_reweigh, _ = pearsonr(list_reweigh,list_label)
-spearman_corr_reweigh, _ = spearmanr(list_reweigh,list_label) 
+list_softmax_sum = list_cd + list_softmax_ig
+list_softmax_ig_cd = list_softmax_ig + list_softmax_cd
 
 pearson_corr_cd, _ = pearsonr(list_cd,list_label)
 spearman_corr_cd, _ = spearmanr(list_cd,list_label)
@@ -91,23 +95,69 @@ spearman_corr_cd, _ = spearmanr(list_cd,list_label)
 pearson_corr_ig, _ = pearsonr(list_ig,list_label)
 spearman_corr_ig, _ = spearmanr(list_ig,list_label)
 
-print("______________________________________")
-print("Pearson Correlation CD", pearson_corr_cd)
-print("Spearman Correlation CD", spearman_corr_cd)
-print("Covariance CD", np.cov(list_cd,list_label))
+pearson_corr_sum, _ = pearsonr(list_sum,list_label)
+spearman_corr_sum, _ = spearmanr(list_sum,list_label) 
+
+pearson_corr_reweigh, _ = pearsonr(list_reweigh,list_label)
+spearman_corr_reweigh, _ = spearmanr(list_reweigh,list_label) 
+
+pearson_corr_softmax_sum, _ = pearsonr(list_softmax_sum,list_label)
+spearman_corr_softmax_sum, _ = spearmanr(list_softmax_sum,list_label)
+
+pearson_coor_softmax_cd, _ = pearsonr(list_softmax_cd,list_label)
+spearman_corr_softmax_cd, _ = spearmanr(list_softmax_cd,list_label) 
+
+pearson_coor_softmax_ig, _ = pearsonr(list_softmax_ig,list_label)
+spearman_corr_softmax_ig, _ = spearmanr(list_softmax_ig,list_label)
+
+ pearson_coor_softmax, _ = pearsonr(list_softmax_ig_cd,list_label)
+spearman_corr_softmax, _ = spearmanr(list_softmax_ig_cd,list_label)
 
 print("______________________________________")
-print("Pearson Correlation IG", pearson_corr_ig)
-print("Spearman Correlation IG", spearman_corr_ig)
-print("Covariance IG", np.cov(list_ig,list_label))
-
-
-print("______________________________________")
-print("Pearson Correlation IG + CD", pearson_corr_sum)
-print("Spearman Correlation IG + CD", spearman_corr_sum)
-print("Covariance IG + CD", np.cov(list_sum,list_label))
+print("CD")
+print("Pearson Correlation", pearson_corr_cd)
+print("Spearman Correlation", spearman_corr_cd)
+print("Covariance", np.cov(list_cd,list_label))
 
 print("______________________________________")
-print("Pearson Correlation Reweighted CD", pearson_corr_reweigh)
-print("Spearman Correlation Reweighted CD", spearman_corr_reweigh)
-print("Covariance Reweighted CD", np.cov(list_reweigh,list_label))
+print("IG")
+print("Pearson Correlation", pearson_corr_ig)
+print("Spearman Correlation", spearman_corr_ig)
+print("Covariance", np.cov(list_ig,list_label))
+
+print("______________________________________")
+print(" IG + CD")
+print("Pearson Correlation", pearson_corr_sum)
+print("Spearman Correlation", spearman_corr_sum)
+print("Covariance", np.cov(list_sum,list_label))
+
+print("______________________________________")
+print("Reweighted CD using IG ratio with max")
+print("Pearson Correlation", pearson_corr_reweigh)
+print("Spearman Correlation", spearman_corr_reweigh)
+print("Covariance", np.cov(list_reweigh,list_label))
+
+print("______________________________________")
+print("CD + Softmax IG")
+print("Pearson Correlation", pearson_corr_softmax_sum)
+print("Spearman Correlation", spearman_corr_softmax_sum)
+print("Covariance", np.cov(list_softmax_sum,list_label))
+
+print("______________________________________")
+print("Softmax IG")
+print("Pearson Correlation", pearson_corr_softmax_ig)
+print("Spearman Correlation", spearman_corr_softmax_ig)
+print("Covariance", np.cov(list_softmax_ig,list_label))
+
+print("______________________________________")
+print("Softmax CD")
+print("Pearson Correlation", pearson_corr_softmax_cd)
+print("Spearman Correlation", spearman_corr_softmax_cd)
+print("Covariance", np.cov(list_softmax_cd,list_label))
+
+print("______________________________________")
+print("Softmax CD + Softmax IG")
+print("Pearson Correlation", pearson_corr_softmax)
+print("Spearman Correlation", spearman_corr_softmax)
+print("Covariance", np.cov(list_softmax,list_label))
+
