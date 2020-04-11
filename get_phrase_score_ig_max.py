@@ -53,7 +53,7 @@ len_sst = len(sst)
 start = time.process_time()
 for index,tree in enumerate(sst):
 	batch = [word.lower() for word in sst_sentences[index]]
-	cd,ig,label = sent_util.travelTree_IG_CD(batch, model, inputs, answers, tree, magnitude) # get ig phrase level scores as well using sum baseline
+	cd,ig,label = sent_util.travelTree_IG_CD(batch, model, inputs, answers, tree, sum) # get ig phrase level scores as well using sum baseline
 
 	list_ig += ig
 	list_cd += cd
@@ -68,7 +68,7 @@ list_cd = np.array(list_cd)
 list_label = np.array(list_label)
 
 list_sum = list_ig + list_cd # sum of ig + cd baseline
-list_reweigh = list() # reweighted baseline
+list_reweigh = list() # reweighted baseline using sum
 list_softmax_ig = zeros(1)
 list_softmax_cd = zeros(1)
 
@@ -159,5 +159,5 @@ print("______________________________________")
 print("Softmax CD + Softmax IG")
 print("Pearson Correlation", pearson_corr_softmax)
 print("Spearman Correlation", spearman_corr_softmax)
-print("Covariance", np.cov(list_softmax,list_label))
+print("Covariance", np.cov(list_softmax_ig_cd,list_label))
 
