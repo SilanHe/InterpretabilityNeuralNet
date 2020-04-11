@@ -69,8 +69,8 @@ list_label = np.array(list_label)
 
 list_sum = list_ig + list_cd # sum of ig + cd baseline
 list_reweigh = list() # reweighted baseline using sum
-list_softmax_ig = zeros(1)
-list_softmax_cd = zeros(1)
+list_softmax_ig = np.zeros(1)
+list_softmax_cd = np.zeros(1)
 
 index_list = 0
 for len_sentence in list_len_sentence:
@@ -81,8 +81,8 @@ for len_sentence in list_len_sentence:
 	for index in range(index_list,index_list+len_sentence):
 		list_reweigh.append(list_cd[index] * abs(list_ig[index]) / largest_magnitude)
 
-	list_softmax_ig = numpy.append(list_softmax_ig,softmax(list_ig[index:index_list+len_sentence]))
-	list_softmax_cd = numpy.append(list_softmax_ig,softmax(list_cd[index:index_list+len_sentence]))
+	list_softmax_ig = np.append(list_softmax_ig,softmax(list_ig[index:index_list+len_sentence]))
+	list_softmax_cd = np.append(list_softmax_ig,softmax(list_cd[index:index_list+len_sentence]))
 
 	index_list += len_sentence
 
