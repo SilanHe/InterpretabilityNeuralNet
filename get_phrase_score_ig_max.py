@@ -82,7 +82,7 @@ for len_sentence in list_len_sentence:
 		list_reweigh.append(list_cd[index] * abs(list_ig[index]) / largest_magnitude)
 
 	list_softmax_ig = np.append(list_softmax_ig,softmax(list_ig[index:index_list+len_sentence]))
-	list_softmax_cd = np.append(list_softmax_ig,softmax(list_cd[index:index_list+len_sentence]))
+	list_softmax_cd = np.append(list_softmax_cd,softmax(list_cd[index:index_list+len_sentence]))
 
 	index_list += len_sentence
 
