@@ -104,10 +104,10 @@ spearman_corr_reweigh, _ = spearmanr(list_reweigh,list_label)
 pearson_corr_softmax_sum, _ = pearsonr(list_softmax_sum,list_label)
 spearman_corr_softmax_sum, _ = spearmanr(list_softmax_sum,list_label)
 
-pearson_coor_softmax_cd, _ = pearsonr(list_softmax_cd,list_label)
+pearson_corr_softmax_cd, _ = pearsonr(list_softmax_cd,list_label)
 spearman_corr_softmax_cd, _ = spearmanr(list_softmax_cd,list_label) 
 
-pearson_coor_softmax_ig, _ = pearsonr(list_softmax_ig,list_label)
+pearson_corr_softmax_ig, _ = pearsonr(list_softmax_ig,list_label)
 spearman_corr_softmax_ig, _ = spearmanr(list_softmax_ig,list_label)
 
 pearson_corr_softmax, _ = pearsonr(list_softmax_ig_cd,list_label)
