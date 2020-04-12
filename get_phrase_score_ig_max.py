@@ -69,8 +69,8 @@ list_label = np.array(list_label)
 
 list_sum = list_ig + list_cd # sum of ig + cd baseline
 list_reweigh = list() # reweighted baseline using sum
-list_softmax_ig = np.zeros(1)
-list_softmax_cd = np.zeros(1)
+list_softmax_ig = np.array([])
+list_softmax_cd = np.array([])
 
 index_list = 0
 for len_sentence in list_len_sentence:
