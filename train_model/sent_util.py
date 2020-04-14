@@ -313,9 +313,6 @@ def integrated_gradients_unigram(batch, model, inputs, answers, output = True):
 		step_input = x_dash + k * (x - x_dash) / T
 		step_output = model(step_input)
 		step_pred = torch.argmax(step_output)
-		# print(step_output)
-		# print(step_output[0])
-		# print(step_output[0][pred.item()])
 		step_grad = torch.autograd.grad(step_output[0][pred.item()], x)[0]
 		if sum_grad is None:
 			sum_grad = step_grad
@@ -430,10 +427,15 @@ def integrated_gradients_function(batch, model, inputs, answers, start, stop, fu
 # returns predictions
 def eval_model(batch, model, answers):
 
+	if isinstance(batch,Batch):
+		x = model.embed(batch.text)
+	elif isinstance(batch,Tensor):
+		x = model.embed(batch)
+
 	# get Predicted label
 	with torch.no_grad():
 		model.eval()
-		pred=torch.argmax(model(batch))
+		pred=torch.argmax(model(x))
 	model.train()
 
 	return answers.vocab.itos[pred]
@@ -460,6 +462,12 @@ def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/d
 # node is the root of the tree in ptb format
 # returns list of scores and labels
 def travelTreeUnigram(batch,model,inputs,answers,node):
+
+	def convert_PTB_label(label):
+		if label <= 2:
+			return "negative"
+		else:
+			return "positive"
 
 	# convert batch to tensor
 	vector = [[inputs.vocab.stoi[word]] for word in batch]
@@ -493,9 +501,11 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 			print(df)
 
 		print("_____________________________")
-			
 
-	
+	# get predicted label
+	predicted_label = eval_model(batch,model,answers)
+	if !isinstance(node,str): # if not str, this shouldnt happen
+		ground_truth_label = convert_PTB_label(int(node.label()))
 	
 	if node:
 		dfs(node, 0)
@@ -513,7 +523,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 		
 		print("______________________________________")
 
-	return list_scores_ig, list_scores_cd, list_labels
+	return list_scores_ig, list_scores_cd, list_labels, predicted_label == ground_truth_label
 
 
 
@@ -616,6 +626,12 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, fun, output = True):
 
 		# visual delimiter so its easier to see different examples
 		print("-------------------")
+
+	def convert_PTB_label(label):
+		if label <= 2:
+			return "negative"
+		else:
+			return "positive"
 	
 	index_words = 0
 
@@ -665,6 +681,11 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, fun, output = True):
 
 			return subtree_list_words
 
+	# get predicted label
+	predicted_label = eval_model(batch,model,answers)
+	if !isinstance(node,str): # if not str, this shouldnt happen
+		ground_truth_label = convert_PTB_label(int(node.label()))
+
 	if output:
 		print("______________________________________")
 	if node:
@@ -675,7 +696,7 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, fun, output = True):
 	if output:
 		print("______________________________________")
 
-	return list_scores_cd, list_scores_ig, list_labels
+	return list_scores_cd, list_scores_ig, list_labels, predicted_label == ground_truth_label
 
 def get_args():
 	parser = ArgumentParser(description='PyTorch/torchtext SST')
