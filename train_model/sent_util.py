@@ -461,7 +461,7 @@ def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/d
 # inputs is the vocab
 # node is the root of the tree in ptb format
 # returns list of scores and labels
-def travelTreeUnigram(batch,model,inputs,answers,node):
+def travelTreeUnigram(batch,model,inputs,answers,node, output = True):
 
 	def convert_PTB_label(label):
 		if label <= 2:
