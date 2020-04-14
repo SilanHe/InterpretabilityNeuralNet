@@ -112,7 +112,7 @@ for len_sentence in list_len_sentence_matching:
 
 	index_list_matching += len_sentence
 
-list_softmax_sum = list_cd_matching + list_softmax_ig_matching
+list_softmax_sum_matching = list_cd_matching + list_softmax_ig_matching
 list_softmax_ig_cd_matching = list_softmax_ig_matching + list_softmax_cd_matching
 
 pearson_corr_cd, _ = pearsonr(list_cd_matching,list_label_matching)
@@ -121,14 +121,14 @@ spearman_corr_cd, _ = spearmanr(list_cd_matching,list_label_matching)
 pearson_corr_ig, _ = pearsonr(list_ig_matching,list_label_matching)
 spearman_corr_ig, _ = spearmanr(list_ig_matching,list_label_matching)
 
-pearson_corr_sum, _ = pearsonr(list_sum,list_label_matching)
-spearman_corr_sum, _ = spearmanr(list_sum,list_label_matching) 
+pearson_corr_sum, _ = pearsonr(list_sum_matching,list_label_matching)
+spearman_corr_sum, _ = spearmanr(list_sum_matching,list_label_matching) 
 
-pearson_corr_reweigh, _ = pearsonr(list_reweigh,list_label_matching)
-spearman_corr_reweigh, _ = spearmanr(list_reweigh,list_label_matching) 
+pearson_corr_reweigh, _ = pearsonr(list_reweigh_matching,list_label_matching)
+spearman_corr_reweigh, _ = spearmanr(list_reweigh_matching,list_label_matching) 
 
-pearson_corr_softmax_sum, _ = pearsonr(list_softmax_sum,list_label_matching)
-spearman_corr_softmax_sum, _ = spearmanr(list_softmax_sum,list_label_matching)
+pearson_corr_softmax_sum, _ = pearsonr(list_softmax_sum_matching,list_label_matching)
+spearman_corr_softmax_sum, _ = spearmanr(list_softmax_sum_matching,list_label_matching)
 
 pearson_corr_softmax_cd, _ = pearsonr(list_softmax_cd_matching,list_label_matching)
 spearman_corr_softmax_cd, _ = spearmanr(list_softmax_cd_matching,list_label_matching) 
@@ -199,7 +199,7 @@ print("______________________________________")
 print(" IG + CD")
 print("Pearson Correlation", pearson_corr_sum)
 print("Spearman Correlation", spearman_corr_sum)
-print("Covariance", np.cov(list_sum,list_label_matching))
+print("Covariance", np.cov(list_sum_matching,list_label_matching))
 
 print("______________________________________")
 print("Reweighted CD using IG ratio with max")
