@@ -136,8 +136,8 @@ spearman_corr_softmax_cd, _ = spearmanr(list_softmax_cd_matching,list_label_matc
 pearson_corr_softmax_ig, _ = pearsonr(list_softmax_ig_matching,list_label_matching)
 spearman_corr_softmax_ig, _ = spearmanr(list_softmax_ig_matching,list_label_matching)
 
-pearson_corr_softmax, _ = pearsonr(list_softmax_ig_matching_cd,list_label_matching)
-spearman_corr_softmax, _ = spearmanr(list_softmax_ig_matching_cd,list_label_matching)
+pearson_corr_softmax, _ = pearsonr(list_softmax_ig_cd_matching,list_label_matching)
+spearman_corr_softmax, _ = spearmanr(list_softmax_ig_cd_matching,list_label_matching)
 
 # iterate through data with matching label
 index_list_not_matching = 0
