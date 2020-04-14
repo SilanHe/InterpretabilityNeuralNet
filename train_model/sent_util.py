@@ -503,7 +503,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node):
 		print("_____________________________")
 
 	# get predicted label
-	predicted_label = eval_model(batch,model,answers)
+	predicted_label = eval_model(word_tensor,model,answers)
 	if not isinstance(node,str): # if not str, this shouldnt happen
 		ground_truth_label = convert_PTB_label(int(node.label()))
 	
@@ -682,7 +682,7 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, fun, output = True):
 			return subtree_list_words
 
 	# get predicted label
-	predicted_label = eval_model(batch,model,answers)
+	predicted_label = eval_model(word_tensor,model,answers)
 	if not isinstance(node,str): # if not str, this shouldnt happen
 		ground_truth_label = convert_PTB_label(int(node.label()))
 
