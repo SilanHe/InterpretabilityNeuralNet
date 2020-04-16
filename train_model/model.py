@@ -24,16 +24,7 @@ class LSTMSentiment(nn.Module):
 		
 
 		# check if a batch or an input tensor
-		if isinstance(batch,Batch):
-			vecs = self.embed(batch.text)
-			if self.use_gpu:
-				self.hidden = (Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim).cuda()),
-								Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim).cuda()))
-			else:
-				self.hidden = (Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)),
-								Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)))
-		
-		elif isinstance(batch,Tensor):
+		if isinstance(batch,Tensor):
 			vecs = batch
 			if self.use_gpu:
 				self.hidden = (Variable(torch.zeros(1, 1, self.hidden_dim).cuda()),
@@ -41,7 +32,14 @@ class LSTMSentiment(nn.Module):
 			else:
 				self.hidden = (Variable(torch.zeros(1, 1, self.hidden_dim)),
 								Variable(torch.zeros(1, 1, self.hidden_dim)))
-
+		else: # assume batch has text field and is a tensor
+			vecs = self.embed(batch.text)
+			if self.use_gpu:
+				self.hidden = (Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim).cuda()),
+								Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim).cuda()))
+			else:
+				self.hidden = (Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)),
+								Variable(torch.zeros(1, batch.text.size()[1], self.hidden_dim)))
 
 		lstm_out, self.hidden = self.lstm(vecs, self.hidden)
 		logits = self.hidden_to_label(lstm_out[-1])
