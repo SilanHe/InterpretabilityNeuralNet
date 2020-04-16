@@ -93,7 +93,7 @@ for index,tree in enumerate(sst):
 	viz.word_heatmap(sentence, lists, label_pred, label, fontsize=9)
 
 	# agglomerate
-	lists = acd.agg_1d.agglomerate(model, batch, percentile_include, 'ig', sweep_dim, # only works for sweep_dim = 1
+	lists = acd.agg_1d.agglomerate(model, batch, percentile_include, 'occlusion', sweep_dim, # only works for sweep_dim = 1
 	                    label_pred, num_iters=num_iters, device=device) # see agg_1d.agglomerate to understand what this dictionary contains
 	lists = acd.agg_1d.collapse_tree(lists) # don't show redundant joins
 
