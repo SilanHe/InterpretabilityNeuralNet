@@ -427,10 +427,10 @@ def integrated_gradients_function(batch, model, inputs, answers, start, stop, fu
 # returns predictions
 def eval_model(batch, model, answers):
 
-	if isinstance(batch,Batch):
-		x = model.embed(batch.text)
-	elif isinstance(batch,Tensor):
+	if isinstance(batch,Tensor):
 		x = model.embed(batch)
+	else:
+		x = model.embed(batch.text)
 
 	# get Predicted label
 	with torch.no_grad():
@@ -438,13 +438,13 @@ def eval_model(batch, model, answers):
 		pred=torch.argmax(model(x))
 	model.train()
 
-	return answers.vocab.itos[pred]
+	return answers.vocab.itos[pred], pred
 
 # returns true if the true and predicted labels are different
 def diff_predicted_label(batch, model, answers):
 
 	true_label = answers.vocab.itos[batch.label.data[0]]
-	predicted_label = eval_model(batch, model, answers)
+	predicted_label, _ = eval_model(batch, model, answers)
 
 	return true_label != predicted_label
 
@@ -503,7 +503,7 @@ def travelTreeUnigram(batch,model,inputs,answers,node, output = True):
 		print("_____________________________")
 
 	# get predicted label
-	predicted_label = eval_model(word_tensor,model,answers)
+	predicted_label, _ = eval_model(word_tensor,model,answers)
 	if not isinstance(node,str): # if not str, this shouldnt happen
 		ground_truth_label = convert_PTB_label(int(node.label()))
 	
@@ -682,7 +682,7 @@ def travelTree_IG_CD(batch,model,inputs, answers, node, fun, output = True):
 			return subtree_list_words
 
 	# get predicted label
-	predicted_label = eval_model(word_tensor,model,answers)
+	predicted_label, _ = eval_model(word_tensor,model,answers)
 	if not isinstance(node,str): # if not str, this shouldnt happen
 		ground_truth_label = convert_PTB_label(int(node.label()))
 
