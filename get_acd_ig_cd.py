@@ -75,7 +75,6 @@ for index,tree in enumerate(sst):
 	sentence = [word.lower() for word in sst_sentences[index]]
 	vector = [[inputs.vocab.stoi[word]] for word in sentence]
 	word_tensor = torch.LongTensor(vector).to(device)
-	word_tensor.cpu()
 	batch = Batch()
 	batch.text = word_tensor
 
