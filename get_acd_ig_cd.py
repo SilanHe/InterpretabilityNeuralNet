@@ -15,7 +15,7 @@ from torchtext import data, datasets
 import pandas as pd
 import time
 import acd
-import viz_1d as viz
+from visualization import viz_1d as viz
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
