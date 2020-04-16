@@ -18,6 +18,7 @@ import acd
 from visualization import viz_1d as viz
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(device)
 
 class Batch:
 	text = torch.zeros(1).to(device)
