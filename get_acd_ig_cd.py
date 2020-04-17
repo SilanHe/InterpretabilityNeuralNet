@@ -16,6 +16,7 @@ import pandas as pd
 import time
 import acd
 from visualization import viz_1d as viz
+import pickle
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
@@ -69,7 +70,7 @@ list_len_sentence_not_matching = list()
 sst_sentences, sst = sent_util.get_sst_PTB("data/trees")
 len_sst = len(sst)
 
-start = time.process_time()
+acds = list()
 for index,tree in enumerate(sst):
 
 	sentence = [word.lower() for word in sst_sentences[index]]
@@ -88,5 +89,7 @@ for index,tree in enumerate(sst):
 	lists = acd.agg_1d.collapse_tree(lists) # don't show redundant joins
 
 	# visualize
-	print("CD")
-	viz.word_heatmap(sentence, lists, label_pred, label, fontsize=9)
+	print(lists)
+	acds.append(lists)
+
+pickle.dump( acds, open( "save.p", "wb" ) )
