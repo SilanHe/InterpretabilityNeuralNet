@@ -89,7 +89,12 @@ for index,tree in enumerate(sst):
 	lists = acd.agg_1d.collapse_tree(lists) # don't show redundant joins
 
 	# visualize
-	print(lists)
-	acds.append(lists)
+	acd_batch = dict()
+	acd_batch['sentence'] = sentence
+	acd_batch['lists'] = lists
+	acd_batch['label_pred'] = label_pred
+	acd_batch['label'] = label
+
+	acds.append(acd_batch)
 
 pickle.dump( acds, open( "save.p", "wb" ) )
