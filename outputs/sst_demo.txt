@@ -1,0 +1,75 @@
+loading results_sst/best_snapshot_devacc_79.35779571533203_devloss_0.41613781452178955_iter_9000_model.pt
+loaded onto gpu...
+getting batches...
+it 's easy to love robin tunney -- she 's pretty and she can act -- 1.3693869876527107
+but it gets harder and harder to understand her choices . -1.3621754337452703
+[ 0.54634043 -0.38223236]
+[ 0.54634017 -0.38223225]
+                        0        1         2             3        4   \
+SST                    cal       is        an  unpleasantly  shallow   
+ContextualDecomp  0.563014 -2.48766 -0.226093      -2.64586 -2.47121   
+
+                        5         6          7         8         9         10  \
+SST                    and  immature  character      with      whom        to   
+ContextualDecomp  0.318954  -2.19048   0.507929  0.758168  0.128488  0.290831   
+
+                        11        12              13       14        15  
+SST                  spend       110  claustrophobic  minutes         .  
+ContextualDecomp -0.369997 -0.741583        -1.67316 -1.03406 -0.386017  
+_____________________________
+                        0        1        2         3         4        5   \
+SST                    the  problem       is      that        it       is   
+ContextualDecomp  0.607854 -3.46196 -1.94301  0.737157  0.739989 -1.18144   
+
+                        6         7        8         9         10       11  \
+SST                    one      that   allows       him        to    churn   
+ContextualDecomp  0.733037  0.651032  0.75358  0.755871  0.332459 -1.75682   
+
+                       12        13        14        15        16       17  \
+SST                   out       one  mediocre     movie     after  another   
+ContextualDecomp -1.32561  0.636498  -2.06329 -0.135954 -0.780441 -1.16131   
+
+                        18  
+SST                      .  
+ContextualDecomp -0.323387  
+_____________________________
+                           0        1        2        3            4      5   \
+SST               bogdanovich     puts  history       in  perspective    and   
+ContextualDecomp      2.20167  2.18125  2.17988  2.14412      2.16917  2.137   
+
+                       6        7        8        9        10          11  \
+SST                     ,      via  kirsten    dunst       's  remarkable   
+ContextualDecomp  2.12048  2.05568   2.1156  2.12686  2.04644     2.17449   
+
+                           12       13       14         15       16      17  \
+SST               performance        ,       he  showcases   davies      as   
+ContextualDecomp      2.08902  1.88395  1.79615  -0.637562  1.66333  1.4861   
+
+                       18       19       20       21       22       23  \
+SST                     a    young    woman       of    great    charm   
+ContextualDecomp  1.20481  1.66359  1.06049  0.59061  1.65194  1.45214   
+
+                        24          25        26         27        28  
+SST                      ,  generosity       and  diplomacy         .  
+ContextualDecomp  0.545837     1.57521  0.497454   0.648589 -0.129255  
+_____________________________
+                        0        1         2        3               4   \
+SST                    the    movie        's  blatant  derivativeness   
+ContextualDecomp  0.505187 -1.31556  0.406545 -4.73845        -1.21406   
+
+                        5         6        7         8         9         10  \
+SST                     is       one   reason        it        's        so   
+ContextualDecomp -0.482145  0.706973 -1.71288  0.667988  0.221129  0.458466   
+
+                          11        12  
+SST               lackluster         .  
+ContextualDecomp    -1.92556 -0.243649  
+_____________________________
+                        0          1         2         3            4  \
+SST                  blue      crush        is        as  predictable   
+ContextualDecomp  1.50538  0.0454733 -0.612154  0.574526    -0.989378   
+
+                        5         6        7          8  
+SST                    as       the    tides          .  
+ContextualDecomp  0.31945  0.378585 -1.12109  0.0200065  
+_____________________________

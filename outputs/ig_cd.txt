@@ -1,0 +1,689 @@
+loading results_sst/best_snapshot_devacc_79.35779571533203_devloss_0.41613781452178955_iter_9000_model.pt
+loaded onto gpu...
+getting batches...
+it 's easy to love robin tunney -- she 's pretty and she can act -- 1.3693869876527107
+but it gets harder and harder to understand her choices . -1.3621754337452703
+[ 0.54634043 -0.38223236]
+[ 0.54634017 -0.38223225]
+it 's easy to love robin tunney -- she 's pretty and she can act -- but it gets harder and harder to understand her choices . -0.7833503279697234
+                       0        1        2        3        4        5   \
+SST                    it       's     easy       to     love    robin   
+ContextualDecomp  1.16935  1.17336  1.18171  1.17345  1.19923 -0.92471   
+
+                        6        7        8        9        10       11  \
+SST                 tunney       --      she       's   pretty      and   
+ContextualDecomp -0.928128  1.14469  1.16644  1.17254  1.19932  1.16448   
+
+                       12        13        14        15      16       17  \
+SST                   she       can       act        --     but       it   
+ContextualDecomp  1.14525 -0.319351 -0.852101  0.949299  1.0011  1.09187   
+
+                        18        19        20       21        22          23  \
+SST                   gets    harder       and   harder        to  understand   
+ContextualDecomp -0.370035 -0.962483  0.928168 -1.04967  0.554973    0.469637   
+
+                        24        25        26  
+SST                    her   choices         .  
+ContextualDecomp  0.724633  0.897522 -0.110173  
+TRUE Label :  negative
+PREDICTED Label :  positive
+_____________________________
+Sentence : it 's easy to love robin tunney -- she 's pretty and she can act -- but it gets harder and harder to understand her choices .
+              0      1      2      3      4      5       6      7      8   \
+Sentence      it     's   easy     to   love  robin  tunney     --    she   
+IntegGrad  0.039  0.026  0.075  0.049  0.124 -0.027  -0.008 -0.007 -0.004   
+
+              9       10     11     12     13     14    15     16     17  \
+Sentence      's  pretty    and    she    can    act    --    but     it   
+IntegGrad  0.012    0.01 -0.022 -0.023 -0.019 -0.015 -0.02 -0.047 -0.075   
+
+              18      19     20      21     22          23     24       25  \
+Sentence    gets  harder    and  harder     to  understand    her  choices   
+IntegGrad -0.085  -0.222 -0.066  -0.188 -0.006       0.001  0.026    0.034   
+
+              26  
+Sentence       .  
+IntegGrad  0.026  
+TRUE Label : negative
+PREDICTED Label : positive
+_____________________________
+peter jackson and company once again dazzle and delight us , fulfilling practically every expectation either a longtime tolkien fan or a movie-going neophyte could want . -0.985910434839546
+                     0        1       2        3       4        5        6   \
+SST               peter  jackson     and  company    once    again   dazzle   
+ContextualDecomp  1.788  1.79749  1.7823  1.78256  1.7923 -0.93865  1.70287   
+
+                       7        8        9        10          11           12  \
+SST                   and  delight       us        ,  fulfilling  practically   
+ContextualDecomp  1.77375  1.82567  1.78818  1.72068     1.75186    -0.944651   
+
+                        13           14        15       16        17       18  \
+SST                  every  expectation    either        a  longtime  tolkien   
+ContextualDecomp -0.920184      1.42481 -0.848614  1.36282   1.63887  1.72635   
+
+                       19       20        21           22        23        24  \
+SST                   fan       or         a  movie-going  neophyte     could   
+ContextualDecomp  1.70376 -1.11738  0.548341    -0.557577 -0.317654 -0.847589   
+
+                        25       26  
+SST                   want        .  
+ContextualDecomp -0.834301 -0.17668  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : peter jackson and company once again dazzle and delight us , fulfilling practically every expectation either a longtime tolkien fan or a movie-going neophyte could want .
+              0        1      2        3      4      5       6      7   \
+Sentence   peter  jackson    and  company   once  again  dazzle    and   
+IntegGrad  0.079    0.076  0.039   -0.013 -0.015 -0.012   0.124  0.078   
+
+                8      9      10          11           12     13           14  \
+Sentence   delight     us      ,  fulfilling  practically  every  expectation   
+IntegGrad    0.179 -0.011 -0.008       0.003       -0.143  0.018        0.046   
+
+               15     16        17       18     19     20     21           22  \
+Sentence   either      a  longtime  tolkien    fan     or      a  movie-going   
+IntegGrad  -0.059  0.004    -0.007   -0.022 -0.039 -0.263  0.035        0.118   
+
+                 23     24     25 26  
+Sentence   neophyte  could   want  .  
+IntegGrad     0.016 -0.082 -0.069 -0  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+if they broke out into elaborate choreography , singing and finger snapping it might have held my attention , but as it stands i kept looking for the last exit from brooklyn . -1.8791176572729427
+                        0        1         2        3         4          5   \
+SST                     if     they     broke      out      into  elaborate   
+ContextualDecomp  0.981071  0.98436  0.985549 -1.00563  0.984933   0.989739   
+
+                            6         7        8        9         10  \
+SST               choreography         ,  singing      and    finger   
+ContextualDecomp       1.00515  0.997649  1.00915  1.00217 -0.995798   
+
+                        11       12        13        14  ...      18       19  \
+SST               snapping       it     might      have  ...       ,      but   
+ContextualDecomp   -1.0156  1.01191  0.999453  0.995333  ...  1.0572  1.00577   
+
+                       20       21       22       23        24        25  \
+SST                    as       it   stands        i      kept   looking   
+ContextualDecomp  1.00744  1.06882  1.03563  1.09203 -0.757225  0.677966   
+
+                        26        27        28       29         30        31  \
+SST                    for       the      last     exit       from  brooklyn   
+ContextualDecomp -0.710633  0.579434  0.175743 -1.41763  0.0468463 -0.215801   
+
+                         32  
+SST                       .  
+ContextualDecomp -0.0758553  
+
+[2 rows x 33 columns]
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : if they broke out into elaborate choreography , singing and finger snapping it might have held my attention , but as it stands i kept looking for the last exit from brooklyn .
+              0     1      2      3      4          5             6      7   \
+Sentence      if  they  broke    out   into  elaborate  choreography      ,   
+IntegGrad  0.044 -0.06  0.127  0.072  0.028     -0.096        -0.241 -0.064   
+
+                8      9       10        11     12     13     14  ...     18  \
+Sentence   singing    and  finger  snapping     it  might   have  ...      ,   
+IntegGrad   -0.154  0.073   0.184     0.153  0.003  0.017  0.003  ...  0.003   
+
+              19     20     21      22     23     24       25     26     27  \
+Sentence     but     as     it  stands      i   kept  looking    for    the   
+IntegGrad  0.012 -0.015 -0.062  -0.036  0.015  0.042    0.023  0.013  0.075   
+
+              28     29     30        31     32  
+Sentence    last   exit   from  brooklyn      .  
+IntegGrad  0.143  0.366 -0.054    -0.077 -0.144  
+
+[2 rows x 33 columns]
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+it would be churlish to begrudge anyone for receiving whatever consolation that can be found in dragonfly , yet it is impossible to find the film anything but appalling , shamelessly manipulative and contrived , and totally lacking in conviction . -0.21457890283421682
+                       0         1        2         3        4         5   \
+SST                    it     would       be  churlish       to  begrudge   
+ContextualDecomp  1.18831 -0.782812  1.18857 -0.782467  1.18873 -0.782963   
+
+                       6         7          8         9            10  \
+SST                anyone       for  receiving  whatever  consolation   
+ContextualDecomp  1.18897 -0.782654    1.18909  -0.78777    -0.784607   
+
+                       11        12       13       14  ...        26       27  \
+SST                  that       can       be    found  ...  anything      but   
+ContextualDecomp  1.18961 -0.786403  1.19098  1.18727  ... -0.803818  1.11699   
+
+                         28       29           30            31        32  \
+SST               appalling        ,  shamelessly  manipulative       and   
+ContextualDecomp  -0.803753  1.06086    -0.800106     -0.811831  0.948831   
+
+                         33        34        35        36        37        38  \
+SST               contrived         ,       and   totally   lacking        in   
+ContextualDecomp  -0.859727  0.706118  0.665596 -0.130696 -0.975588  0.430839   
+
+                          39         40  
+SST               conviction          .  
+ContextualDecomp    0.812408  0.0487838  
+
+[2 rows x 41 columns]
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : it would be churlish to begrudge anyone for receiving whatever consolation that can be found in dragonfly , yet it is impossible to find the film anything but appalling , shamelessly manipulative and contrived , and totally lacking in conviction .
+              0      1      2         3      4         5       6      7   \
+Sentence      it  would     be  churlish     to  begrudge  anyone    for   
+IntegGrad -0.105  0.167 -0.021     0.204  0.014     0.052   0.001  0.001   
+
+                  8         9            10     11     12     13     14  ...  \
+Sentence   receiving  whatever  consolation   that    can     be  found  ...   
+IntegGrad     -0.002     0.013        0.009  0.003  0.002  0.002 -0.001  ...   
+
+                 26     27         28    29           30            31     32  \
+Sentence   anything    but  appalling     ,  shamelessly  manipulative    and   
+IntegGrad     0.012  0.021      0.019  0.01        0.029         0.015  0.011   
+
+                  33     34     35       36       37     38          39     40  
+Sentence   contrived      ,    and  totally  lacking     in  conviction      .  
+IntegGrad      0.038  0.005 -0.005    0.006    0.018 -0.052      -0.057 -0.132  
+
+[2 rows x 41 columns]
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+what makes the movie special is its utter sincerity . 1.3083439917389152
+                        0        1         2         3        4         5  \
+SST                  what    makes       the     movie  special        is   
+ContextualDecomp  1.01381  1.62946  0.329044 -0.602347  1.45022 -0.684222   
+
+                         6        7          8         9  
+SST                    its    utter  sincerity         .  
+ContextualDecomp -0.128214 -1.40919     1.3174 -0.189351  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : what makes the movie special is its utter sincerity .
+               0      1      2      3        4      5      6      7  \
+Sentence    what  makes    the  movie  special     is    its  utter   
+IntegGrad -0.017  0.104 -0.033  0.014   -0.028 -0.064 -0.062 -0.141   
+
+                   8      9  
+Sentence   sincerity      .  
+IntegGrad      0.213  0.049  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+but never mind all that ; the boobs are fantasti -1.0009612301992215
+                        0        1        2         3         4         5  \
+SST                   but    never     mind       all      that         ;   
+ContextualDecomp  1.21475  1.05483  1.39001  0.935147  0.948481 -0.300573   
+
+                         6        7         8         9  
+SST                    the    boobs       are  fantasti  
+ContextualDecomp  0.475244 -1.78744  0.548857   1.25319  
+TRUE Label :  positive
+PREDICTED Label :  negative
+_____________________________
+Sentence : but never mind all that ; the boobs are fantasti
+               0      1      2      3      4     5      6      7      8  \
+Sentence     but  never   mind    all   that     ;    the  boobs    are   
+IntegGrad  0.035  0.131 -0.015  0.002  0.029  0.01 -0.001   0.35 -0.162   
+
+                  9  
+Sentence   fantasti  
+IntegGrad     -0.11  
+TRUE Label : positive
+PREDICTED Label : negative
+_____________________________
+a thoughtful , reverent portrait of what is essentially a subculture , with its own rules regarding love and family , governance and hierarchy . 1.6276277539478756
+                       0           1        2         3         4        5   \
+SST                     a  thoughtful        ,  reverent  portrait       of   
+ContextualDecomp  1.97373      2.0207  1.97164 -0.765631   2.00032  1.86277   
+
+                       6        7            8        9           10       11  \
+SST                  what       is  essentially        a  subculture        ,   
+ContextualDecomp  1.92882 -0.76374    -0.761445  1.77231     1.95035  1.74048   
+
+                      12        13       14       15         16       17  \
+SST                 with       its      own    rules  regarding     love   
+ContextualDecomp  1.8483 -0.681937  1.48481  1.28487   0.935115  1.63758   
+
+                       18       19        20          21        22         23  \
+SST                   and   family         ,  governance       and  hierarchy   
+ContextualDecomp  1.05418  1.44284  0.632905     1.21184  0.563783    -0.1793   
+
+                        24  
+SST                      .  
+ContextualDecomp -0.156398  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : a thoughtful , reverent portrait of what is essentially a subculture , with its own rules regarding love and family , governance and hierarchy .
+          0           1      2         3         4      5      6      7   \
+Sentence   a  thoughtful      ,  reverent  portrait     of   what     is   
+IntegGrad -0       0.349  0.005     0.058    -0.005 -0.038 -0.065 -0.139   
+
+                    8      9           10     11     12     13    14     15  \
+Sentence   essentially      a  subculture      ,   with    its   own  rules   
+IntegGrad       -0.169  0.029        0.07 -0.013 -0.011 -0.069 -0.04  -0.02   
+
+                  16     17     18      19     20          21     22  \
+Sentence   regarding   love    and  family      ,  governance    and   
+IntegGrad     -0.028  0.035 -0.007  -0.002 -0.009       0.022  0.004   
+
+                  23     24  
+Sentence   hierarchy      .  
+IntegGrad         -0 -0.009  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+the superior plotline is n't quite enough to drag along the dead -lrb- water -rrb- weight of the other . -0.5092007676070089
+                       0         1         2         3         4        5   \
+SST                   the  superior  plotline        is       n't    quite   
+ContextualDecomp  1.10833   1.15857   1.08303 -0.985992  0.972483  1.10398   
+
+                       6        7        8        9         10        11  \
+SST                enough       to     drag    along       the      dead   
+ContextualDecomp  1.16068  1.07412 -1.01782  1.07764  0.941288 -0.975565   
+
+                       12        13       14       15        16        17  \
+SST                 -lrb-     water    -rrb-   weight        of       the   
+ContextualDecomp -0.96708  0.955077  1.12183 -1.14042  0.277391  0.423739   
+
+                        18         19  
+SST                  other          .  
+ContextualDecomp  0.203017 -0.0822348  
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : the superior plotline is n't quite enough to drag along the dead -lrb- water -rrb- weight of the other .
+              0         1         2      3      4      5       6      7   \
+Sentence     the  superior  plotline     is    n't  quite  enough     to   
+IntegGrad -0.014    -0.565     -0.13  0.267  0.352  0.048   0.043  0.119   
+
+              8      9      10     11     12     13     14      15    16  \
+Sentence    drag  along    the   dead  -lrb-  water  -rrb-  weight    of   
+IntegGrad  0.466  0.021  0.112  0.132  0.064 -0.014 -0.016   0.113 -0.01   
+
+              17     18     19  
+Sentence     the  other      .  
+IntegGrad -0.027 -0.046 -0.116  
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+it 's light on the chills and heavy on the atmospheric weirdness , and there are moments of jaw-droppingly odd behavior -- yet i found it weirdly appealing . 0.7020857356695592
+                       0        1        2        3        4        5   \
+SST                    it       's    light       on      the   chills   
+ContextualDecomp  1.70121  1.69559  1.70778  1.69937  1.69092 -1.04115   
+
+                       6       7        8        9            10         11  \
+SST                   and   heavy       on      the  atmospheric  weirdness   
+ContextualDecomp  1.69587 -1.0496  1.69635  1.68186     -1.02436   -1.04448   
+
+                       12       13       14       15       16       17  \
+SST                     ,      and    there      are  moments       of   
+ContextualDecomp  1.67669  1.67503  1.63766  1.65107  1.71207  1.37108   
+
+                              18       19        20        21        22  \
+SST               jaw-droppingly      odd  behavior        --       yet   
+ContextualDecomp         1.73463  1.21991  -1.06784  0.638059  0.860874   
+
+                       23        24       25        26         27        28  
+SST                     i     found       it   weirdly  appealing         .  
+ContextualDecomp  1.13833  0.253358  0.71424 -0.395348    1.55706 -0.138926  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : it 's light on the chills and heavy on the atmospheric weirdness , and there are moments of jaw-droppingly odd behavior -- yet i found it weirdly appealing .
+             0      1      2      3      4       5      6      7      8   \
+Sentence     it     's  light     on    the  chills    and  heavy     on   
+IntegGrad  0.02  0.055  0.171 -0.032 -0.082  -0.092 -0.093 -0.286 -0.007   
+
+              9            10         11     12     13     14     15       16  \
+Sentence     the  atmospheric  weirdness      ,    and  there    are  moments   
+IntegGrad -0.015       -0.012     -0.121 -0.006 -0.005 -0.005  0.021    0.059   
+
+              17              18     19        20     21     22     23     24  \
+Sentence      of  jaw-droppingly    odd  behavior     --    yet      i  found   
+IntegGrad  0.017           0.043 -0.056    -0.211 -0.016 -0.021 -0.015 -0.011   
+
+              25       26         27     28  
+Sentence      it  weirdly  appealing      .  
+IntegGrad -0.043    0.184      0.095  0.029  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+it trusts the story it sets out to tell . 2.7294905747747924
+                        0        1         2        3        4        5  \
+SST                    it   trusts       the    story       it     sets   
+ContextualDecomp  1.57871  1.61982  0.515482  1.30859  1.08448  1.96836   
+
+                       6         7         8         9  
+SST                  out        to      tell         .  
+ContextualDecomp -1.0502  0.287105  0.985369 -0.198785  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : it trusts the story it sets out to tell .
+               0       1      2      3      4      5      6      7      8  \
+Sentence      it  trusts    the  story     it   sets    out     to   tell   
+IntegGrad  0.011   0.167  0.008  0.019  0.038  0.029 -0.099 -0.014 -0.005   
+
+               9  
+Sentence       .  
+IntegGrad -0.006  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+the result is a powerful , naturally dramatic piece of low-budget filmmaking . 3.076695952199017
+                       0        1         2        3         4        5   \
+SST                   the   result        is        a  powerful        ,   
+ContextualDecomp  1.51615 -1.01196 -0.942361  1.33038    2.4117  1.13361   
+
+                         6         7        8         9           10  \
+SST               naturally  dramatic    piece        of  low-budget   
+ContextualDecomp    1.77689   1.33673  1.34739  0.387621    -1.53705   
+
+                          11        12  
+SST               filmmaking         .  
+ContextualDecomp    -1.05078 -0.198793  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : the result is a powerful , naturally dramatic piece of low-budget filmmaking .
+             0       1      2      3         4      5          6         7   \
+Sentence    the  result     is      a  powerful      ,  naturally  dramatic   
+IntegGrad  0.12  -0.032  0.173  0.136     0.598 -0.012       0.07     0.006   
+
+              8      9           10          11     12  
+Sentence   piece     of  low-budget  filmmaking      .  
+IntegGrad -0.042 -0.174      -0.246      -0.077 -0.006  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+just send it to cranky . -3.9097386424170195
+                        0        1        2         3        4         5
+SST                  just     send       it        to   cranky         .
+ContextualDecomp -2.16841 -3.51612  1.18189  0.458458 -2.29061 -0.259441
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : just send it to cranky .
+               0      1      2      3       4      5
+Sentence    just   send     it     to  cranky      .
+IntegGrad  0.715  1.316 -0.465 -0.068   0.355 -0.016
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+a serious movie with serious ideas . 1.1983953904538904
+                         0         1         2         3         4         5  \
+SST                      a   serious     movie      with   serious     ideas   
+ContextualDecomp  0.407824  0.701178 -0.290204  0.810512  0.169045  0.628183   
+
+                         6  
+SST                      .  
+ContextualDecomp -0.192217  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : a serious movie with serious ideas .
+               0        1      2      3        4      5      6
+Sentence       a  serious  movie   with  serious  ideas      .
+IntegGrad  0.022   -0.005 -0.003  0.008   -0.025  0.005  0.052
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+it 's soulful and unslick , and that 's apparently just what -lrb- aniston -rrb- has always needed to grow into a movie career . 0.2549330937901074
+                       0        1        2        3        4        5   \
+SST                    it       's  soulful      and  unslick        ,   
+ContextualDecomp  1.53569  1.51786  1.56828  1.52169  1.48978  1.51053   
+
+                       6        7        8           9        10       11  \
+SST                   and     that       's  apparently     just     what   
+ContextualDecomp  1.50699  1.50091  1.48419    -1.02194  1.25135  1.42428   
+
+                       12       13       14        15       16       17  \
+SST                 -lrb-  aniston    -rrb-       has   always   needed   
+ContextualDecomp -1.03306  1.63487  1.49725 -0.317729  1.49364  1.14298   
+
+                        18       19         20        21        22       23  \
+SST                     to     grow       into         a     movie   career   
+ContextualDecomp  0.905184  1.09713 -0.0538348  0.241107 -0.226949  1.23945   
+
+                        24  
+SST                      .  
+ContextualDecomp -0.203849  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : it 's soulful and unslick , and that 's apparently just what -lrb- aniston -rrb- has always needed to grow into a movie career .
+              0      1        2      3        4      5      6      7      8   \
+Sentence      it     's  soulful    and  unslick      ,    and   that     's   
+IntegGrad -0.007  0.062    0.457 -0.055    -0.02 -0.027 -0.036 -0.059 -0.176   
+
+                   9      10     11     12       13     14     15      16  \
+Sentence   apparently   just   what  -lrb-  aniston  -rrb-    has  always   
+IntegGrad      -0.279 -0.131 -0.108 -0.152    0.062 -0.003  0.008   0.008   
+
+               17    18     19     20     21     22      23     24  
+Sentence   needed    to   grow   into      a  movie  career      .  
+IntegGrad  -0.017 -0.02 -0.058 -0.074 -0.029 -0.011   0.026  0.011  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+a seriously bad film with seriously warped logic by writer-director kurt wimmer at the screenplay level . -3.864888941405722
+                        0          1        2         3         4          5   \
+SST                      a  seriously      bad      film      with  seriously   
+ContextualDecomp  0.776746   0.573954 -4.46293  0.699861  0.922189  0.0729138   
+
+                       6        7        8                9        10  \
+SST                warped    logic       by  writer-director     kurt   
+ContextualDecomp -2.38987 -2.18784 -1.03369         -0.54331  0.57895   
+
+                        11       12        13          14        15        16  
+SST                 wimmer       at       the  screenplay     level         .  
+ContextualDecomp -0.442242 -1.02669  0.224501    0.904016  0.428829 -0.330538  
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : a seriously bad film with seriously warped logic by writer-director kurt wimmer at the screenplay level .
+              0          1     2      3      4          5       6      7   \
+Sentence       a  seriously   bad   film   with  seriously  warped  logic   
+IntegGrad  0.166      0.008  0.74 -0.054 -0.056     -0.012   0.076  0.045   
+
+              8                9     10      11     12     13          14  \
+Sentence      by  writer-director  kurt  wimmer     at    the  screenplay   
+IntegGrad  0.006           -0.011 -0.01  -0.017  0.006 -0.029      -0.029   
+
+              15     16  
+Sentence   level      .  
+IntegGrad -0.035 -0.052  
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+and people make fun of me for liking showgirls . 0.8518156947583335
+                        0        1        2        3         4        5  \
+SST                   and   people     make      fun        of       me   
+ContextualDecomp  1.16221  1.25287  1.27581  1.83756  0.410127  1.08084   
+
+                         6         7          8         9  
+SST                    for    liking  showgirls         .  
+ContextualDecomp -0.526683  0.664676   -2.66387 -0.141585  
+TRUE Label :  negative
+PREDICTED Label :  positive
+_____________________________
+Sentence : and people make fun of me for liking showgirls .
+               0       1      2      3      4      5      6       7  \
+Sentence     and  people   make    fun     of     me    for  liking   
+IntegGrad -0.017   0.029  0.109  0.308 -0.066 -0.041 -0.053   0.005   
+
+                   8      9  
+Sentence   showgirls      .  
+IntegGrad     -0.695  0.024  
+TRUE Label : negative
+PREDICTED Label : positive
+_____________________________
+ultimately this is a frustrating patchwork : an uneasy marriage of louis begley 's source novel -lrb- about schmidt -rrb- and an old payne screenplay . -4.694970422637816
+                          0        1        2           3            4   \
+SST               ultimately     this       is           a  frustrating   
+ContextualDecomp    0.792885 -6.05013 -4.41096  0.00566962     -6.11155   
+
+                         5         6          7        8         9        10  \
+SST               patchwork         :         an   uneasy  marriage       of   
+ContextualDecomp   -3.14458  0.558045 -0.0250674 -2.33083  0.696685 -0.20697   
+
+                        11       12       13        14        15       16  \
+SST                  louis   begley       's    source     novel    -lrb-   
+ContextualDecomp  0.355067 -2.33489  0.31952  0.702733  0.739195 -1.74291   
+
+                        17        18        19        20         21        22  \
+SST                  about   schmidt     -rrb-       and         an       old   
+ContextualDecomp  0.526378  0.130248  0.571704  0.263659  0.0297852 -0.885657   
+
+                         23          24       25  
+SST                   payne  screenplay        .  
+ContextualDecomp  0.0785312    0.622766 -0.21967  
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : ultimately this is a frustrating patchwork : an uneasy marriage of louis begley 's source novel -lrb- about schmidt -rrb- and an old payne screenplay .
+                   0     1      2      3            4          5      6   \
+Sentence   ultimately  this     is      a  frustrating  patchwork      :   
+IntegGrad      -0.071  0.26  0.148  0.083        0.202      0.051 -0.005   
+
+              7       8         9      10     11      12     13      14  \
+Sentence      an  uneasy  marriage     of  louis  begley     's  source   
+IntegGrad  0.014   0.015    -0.009  0.008  0.012   0.055  0.004  -0.004   
+
+              15     16     17       18     19     20     21     22     23  \
+Sentence   novel  -lrb-  about  schmidt  -rrb-    and     an    old  payne   
+IntegGrad -0.012  0.006  0.002   -0.001 -0.002  0.001 -0.002 -0.003 -0.002   
+
+                   24   25  
+Sentence   screenplay    .  
+IntegGrad      -0.045 -0.1  
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+smart , sassy interpretation of the oscar wilde play . 4.253431868640617
+                        0        1        2               3         4  \
+SST                 smart        ,    sassy  interpretation        of   
+ContextualDecomp  2.54117  1.32558  1.93644         1.62261  0.388137   
+
+                         5        6         7         8        9  
+SST                    the    oscar     wilde      play        .  
+ContextualDecomp  0.490067  1.57362 -0.198677 -0.642722 -0.19824  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : smart , sassy interpretation of the oscar wilde play .
+               0      1      2               3      4      5      6      7  \
+Sentence   smart      ,  sassy  interpretation     of    the  oscar  wilde   
+IntegGrad  0.242 -0.016  0.041          -0.007 -0.016 -0.029 -0.014 -0.028   
+
+               8      9  
+Sentence    play      .  
+IntegGrad -0.059 -0.024  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________
+richard pryor mined his personal horrors and came up with a treasure chest of material , but lawrence gives us mostly fool 's gold . -1.0531015007159414
+                       0        1        2        3         4        5   \
+SST               richard    pryor    mined      his  personal  horrors   
+ContextualDecomp  1.22622  1.23095  1.21678  1.22059   1.24018 -1.00918   
+
+                       6        7         8        9        10        11  \
+SST                   and     came        up     with        a  treasure   
+ContextualDecomp  1.24322  1.25055 -0.975526  1.26803  1.20788   1.30846   
+
+                        12       13        14       15        16        17  \
+SST                  chest       of  material        ,       but  lawrence   
+ContextualDecomp -0.944747  1.06465   1.06827  1.14697  0.997267  -0.84729   
+
+                       18       19        20       21        22        23  \
+SST                 gives       us    mostly     fool        's      gold   
+ContextualDecomp  1.39278  1.23397 -0.490738 -1.53387  0.524679  0.894389   
+
+                        24  
+SST                      .  
+ContextualDecomp -0.135698  
+TRUE Label :  negative
+PREDICTED Label :  positive
+_____________________________
+Sentence : richard pryor mined his personal horrors and came up with a treasure chest of material , but lawrence gives us mostly fool 's gold .
+                0      1      2      3         4        5      6      7   \
+Sentence   richard  pryor  mined    his  personal  horrors    and   came   
+IntegGrad    0.052  0.327  -0.01 -0.028    -0.046   -0.225  0.027  0.012   
+
+              8      9      10        11     12     13        14     15  \
+Sentence      up   with      a  treasure  chest     of  material      ,   
+IntegGrad  0.008 -0.006  0.048      0.06 -0.054 -0.015    -0.023 -0.023   
+
+              16        17     18     19      20    21     22     23     24  
+Sentence     but  lawrence  gives     us  mostly  fool     's   gold      .  
+IntegGrad -0.089    -0.023 -0.023 -0.058  -0.174 -0.54 -0.022  0.015  0.035  
+TRUE Label : negative
+PREDICTED Label : positive
+_____________________________
+` punch-drunk love is so convinced of its own brilliance that , if it were a person , you 'd want to smash its face in . ' -0.825451321545709
+                        0            1         2        3         4   \
+SST                      `  punch-drunk      love       is        so   
+ContextualDecomp  0.889578     -1.12484  0.939522 -1.11269  0.926165   
+
+                         5        6        7         8           9         10  \
+SST               convinced       of      its       own  brilliance      that   
+ContextualDecomp   0.929097  0.96062 -1.08951  0.937708     1.00473  0.951611   
+
+                        11        12        13       14        15       16  \
+SST                      ,        if        it     were         a   person   
+ContextualDecomp  0.978302  0.939986  0.981999 -1.04855  0.999522  1.00342   
+
+                       17       18        19        20        21       22  \
+SST                     ,      you        'd      want        to    smash   
+ContextualDecomp  1.04973  1.10013  0.549236  0.675845  0.801562 -1.21793   
+
+                        23        24        25         26        27  
+SST                    its      face        in          .         '  
+ContextualDecomp -0.204245  0.989244  0.537131 -0.0228762 -0.336483  
+TRUE Label :  negative
+PREDICTED Label :  negative
+_____________________________
+Sentence : ` punch-drunk love is so convinced of its own brilliance that , if it were a person , you 'd want to smash its face in . '
+              0            1      2      3      4          5     6      7   \
+Sentence       `  punch-drunk   love     is     so  convinced    of    its   
+IntegGrad  0.201        0.525 -0.537  0.029  0.022      0.054 -0.02 -0.032   
+
+            8           9      10     11    12     13     14     15      16  \
+Sentence   own  brilliance   that      ,    if     it   were      a  person   
+IntegGrad -0.1       -0.36  0.008  0.013  0.01  0.097  0.046 -0.007   0.011   
+
+              17     18    19     20     21     22    23     24     25     26  \
+Sentence       ,    you    'd   want     to  smash   its   face     in      .   
+IntegGrad  0.007  0.022  0.09  0.033  0.088  0.367 -0.04 -0.023 -0.058 -0.065   
+
+              27  
+Sentence       '  
+IntegGrad -0.148  
+TRUE Label : negative
+PREDICTED Label : negative
+_____________________________
+nothing short of a masterpiece -- and a challenging one . 1.3235184108132398
+                       0        1         2         3            4         5   \
+SST               nothing    short        of         a  masterpiece        --   
+ContextualDecomp  -2.9019 -2.38595 -0.570564  0.657878      3.71635  0.495622   
+
+                        6         7            8        9         10  
+SST                    and         a  challenging      one         .  
+ContextualDecomp  0.582291  0.233927      2.27633  1.24888 -0.321971  
+TRUE Label :  positive
+PREDICTED Label :  positive
+_____________________________
+Sentence : nothing short of a masterpiece -- and a challenging one .
+                0      1      2      3            4      5     6      7   \
+Sentence   nothing  short     of      a  masterpiece     --   and      a   
+IntegGrad   -0.892 -0.281  0.106  0.276        0.888  0.021  0.04  0.126   
+
+                    8      9      10  
+Sentence   challenging    one      .  
+IntegGrad        0.316  0.098  0.069  
+TRUE Label : positive
+PREDICTED Label : positive
+_____________________________

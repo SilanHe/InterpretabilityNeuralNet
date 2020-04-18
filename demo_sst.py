@@ -14,11 +14,12 @@ import pandas as pd
 # To train model, first run 'train.py' from train_model dir
 
 # get model path, OS safe
-snapshot_dir = 'models/'
-snapshot_file = join(snapshot_dir, 'best_rnn_model_sst.tar')
+
+snapshot_dir = 'results_sst/'
+snapshot_file = join(snapshot_dir, 'best_snapshot_devacc_79.35779571533203_devloss_0.41613781452178955_iter_9000_model.pt')
 
 # get model
-model = sent_util.get_nn(snapshot_file)
+model = sent_util.get_model(snapshot_file)
 
 # get data
 inputs, answers, train_iterator, dev_iterator = sent_util.get_sst()
@@ -54,8 +55,6 @@ sent_util.integrated_gradients_unigram(data[high_level_comp_ind], model, inputs,
 
 for ind in range(0,20):
 	sent_util.CD_unigram(data[ind], model, inputs, answers)
-
-for ind in range(0,20):
 	sent_util.integrated_gradients_unigram(data[ind], model, inputs, answers)
 
 
