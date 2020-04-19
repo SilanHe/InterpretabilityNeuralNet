@@ -280,18 +280,16 @@ def makedirs(name):
 # answers: vocab for encoding labels
 def integrated_gradients_unigram(batch, model, inputs, answers, output = True):
 
-	# set up
-	if isinstance(batch,Batch):
-		text = batch.text.data[:, 0]
-		words = [inputs.vocab.itos[i] for i in text]
-		x = model.embed(batch.text)
-		len_batch = len(batch.text)
-
-	elif isinstance(batch,Tensor):
+	if isinstance(batch,Tensor):
 		text = batch.data[:, 0]
 		words = [inputs.vocab.itos[i] for i in text]
 		x = model.embed(batch)
 		len_batch = len(words)
+	else:
+		text = batch.text.data[:, 0]
+		words = [inputs.vocab.itos[i] for i in text]
+		x = model.embed(batch.text)
+		len_batch = len(batch.text)
 	
 	T = x.size(0)
 	word_vecs = [word_vec.cpu() for word_vec in x]
@@ -328,7 +326,6 @@ def integrated_gradients_unigram(batch, model, inputs, answers, output = True):
 	sum_grad = sum_grad.sum(dim=2)
 
 	relevances = sum_grad.detach().cpu().numpy()
-
 
 	try:
 		relevances = list(np.round(np.reshape(relevances,len(words)),3))
@@ -448,10 +445,17 @@ def diff_predicted_label(batch, model, answers):
 
 	return true_label != predicted_label
 
-def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/data/trees"):
+def get_sst_PTB(path = "/Users/silanhe/Documents/McGill/Grad/WINTER2020/NLU/ig/data/trees", filesplit = "test"):
 	sst_reader = nltk.corpus.BracketParseCorpusReader(path, ".*.txt")
-	sst_sentences = sst_reader.sents("test.txt")
-	sst = sst_reader.parsed_sents("test.txt")
+	if filesplit == "test":
+		sst_sentences = sst_reader.sents("test.txt")
+		sst = sst_reader.parsed_sents("test.txt")
+	elif filesplit == "train":
+		sst_sentences = sst_reader.sents("train.txt")
+		sst = sst_reader.parsed_sents("train.txt")
+	elif filesplit == "dev":
+		sst_sentences = sst_reader.sents("dev.txt")
+		sst = sst_reader.parsed_sents("dev.txt")
 
 	return sst_sentences, sst
 
