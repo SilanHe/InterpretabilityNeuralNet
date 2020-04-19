@@ -85,7 +85,7 @@ for index,tree in enumerate(sst):
 
 	# agglomerate
 	lists = acd.agg_1d.agglomerate(model, batch, percentile_include, method, sweep_dim, # only works for sweep_dim = 1
-	                    label_pred, num_iters=num_iters, device=device, inputs) # see agg_1d.agglomerate to understand what this dictionary contains
+	                    label_pred, inputs, num_iters=num_iters, device=device) # see agg_1d.agglomerate to understand what this dictionary contains
 	lists = acd.agg_1d.collapse_tree(lists) # don't show redundant joins
 
 	# visualize
